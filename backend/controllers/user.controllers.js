@@ -167,7 +167,7 @@ exports.deleteAccount = (req, res, next) => {
   }
   User.findOne({ where: { id: userId }, raw: true })
     .then((user) => {
-      if (req.tokenId !== user.id || req.role === 0) {
+      if (req.tokenId !== user.id || req.role === 1) {
         return res.status(401).json({ message: "Unauthorized" });
       }
       // Suppression de l'utilisateur
