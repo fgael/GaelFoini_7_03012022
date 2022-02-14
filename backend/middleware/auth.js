@@ -14,7 +14,7 @@ const extractBearer = (authorization) => {
 // Vérification de la présence du token
 module.exports = (req, res, next) => {
   const token =
-    req.headers.authorization && extractBearer(req.headers.authorization);
+    req.headers.authorization;
 
   if (!token) {
     return res.status(401).json({ message: "Try again little Genius" });

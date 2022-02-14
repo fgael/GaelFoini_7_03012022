@@ -71,6 +71,7 @@ exports.login = async (req, res, next) => {
       process.env.JWT_SECRET,
       { expiresIn: process.env.JWT_DURING }
     );
+  
     const refreshToken = jwt.sign(
       {
         id: user.id,
@@ -82,7 +83,11 @@ exports.login = async (req, res, next) => {
       process.env.JWT_SECRET,
       { expiresIn: process.env.JWT_DURINGREFRESH }
     );
-    return res.json({ access_token: token, refresh_token: refreshToken });
+    const tokens = {
+      access_token: token,
+      refresh_token: refreshToken,
+    }
+    return res.json({ userTokens: tokens, userInfos: user });
   } catch (err) {
     if (err.name == "SequelizeDatabaseError") {
       res.status(500).json({ message: "Database Error", error: err });

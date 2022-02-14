@@ -3,42 +3,55 @@
     <img src="../assets/icon-left-font.png" alt="logo">
     <h1 class="container__title" v-if="type == 'login'">Connexion</h1>
     <h1 class="container__title" v-else>Inscription</h1>
-    <p class="container__subtitle" v-if="type == 'login'">
+      <p class="container__subtitle" v-if="type == 'login'">
       Tu n'as pas encore de compte ?
       <span class="container__action" @click="switchCreateAccount">Créer un compte</span>
-    </p>
-    <p class="container__subtitle" v-else>
+      </p>
+      <p class="container__subtitle" v-else>
       Tu as déjà un compte ?
       <span class="container__action" @click="switchLogin">Se connecter</span>
-    </p>
-    <div class="form-group" v-if="type == 'create'">
-      <input v-model="prenom" class="form-group__input" type="text" placeholder="Prénom" />
-      <input v-model="nom" class="form-group__input" type="text" placeholder="Nom" />
-    </div>
-    <div class="form-group">
-      <input v-model="email" class="form-group__input" type="text" placeholder="Email" />
-    </div>
-    <div class="form-group" v-if="type == 'create'">
-      <input v-model="pseudo" class="form-group__input" type="text" placeholder="Pseudo" />
-    </div>
-    <div class="form-group">
-      <input v-model="password" class="form-group__input" type="text" placeholder="Mot de passe" />
-    </div>
-    <div class="form-group" v-if="type == 'create'">
-      <input v-model="secretKey" class="form-group__input" type="text" placeholder="(Optionnel) Formule magique" />
-    </div>
-    <div class="form-group">
-      <button @click="login()" class="button" :class="{'button--disabled' : !validatedFields}" v-if="type == 'login'">
-        Connexion
-      </button>
-      <button @click="createAccount()"  class="button" :class="{'button--disabled' : !validatedFields}" v-else>Créer mon compte</button>
-    </div>
+      </p>
+      <div class="form-group" v-if="type == 'create'">
+        <input v-model="prenom" class="form-group__input" type="text" placeholder="Prénom" />
+        <input v-model="nom" class="form-group__input" type="text" placeholder="Nom" />
+      </div>
+      <div class="form-group">
+        <input v-model="email" class="form-group__input" type="text" placeholder="E-mail" />
+      </div>
+      <div class="form-group" v-if="type == 'create'">
+        <input v-model="pseudo" class="form-group__input" type="text" placeholder="Pseudo" />
+      </div>
+      <div class="form-group">
+        <input v-model="password" class="form-group__input" type="password" placeholder="Mot de passe" />
+      </div>
+      <div class="form-group" v-if="type == 'create'">
+        <input v-model="secretKey" class="form-group__input" type="text" placeholder="Formule magique" />
+      </div>
+      <div class="form-group" v-if="type == 'login' && status == 'error_login'">
+        Adresse e-mail et/ou mot de passe invalide
+      </div>
+      <div class="form-group" v-if="type == 'create' && status == 'error_create'">
+        Adresse e-mail déjà utilisée
+      </div>
+      <div class="form-group">
+        <button @click="login()" class="button" :class="{'button--disabled' : !validatedFields}" v-if="type == 'login'">
+          <span v-if="status == 'loading'">Connexion en cours ... </span>
+          <span v-else>Connexion</span>
+        </button>
+        <button @click="createAccount()"  class="button" :class="{'button--disabled' : !validatedFields}" v-else>
+          <span v-if="status == 'loading'">Création en cours ... </span>
+          <span v-else>Créer mon compte</span>
+        </button>
+      </div>
   </div>
 </template>
 
 <script>
+
+import { mapState } from 'vuex'
+
 export default {
-  name: 'loginView',
+  name: 'LoginView',
   data() {
     return {
       type: 'login',
@@ -65,7 +78,8 @@ export default {
           return false;
         }
       }
-    }
+    },
+    ...mapState(['status'])
  },
 
   methods: {
@@ -75,20 +89,19 @@ export default {
     switchLogin() {
       this.type = "login";
     },
-    switchAdmin(){
-        this.type = "secretKey"
-    },
     login() {
+      const self = this;
         this.$store.dispatch('login', {
             email: this.email,
             password: this.password,
-        }).then(function (response) {
-            console.log(response)
+        }).then(function () {
+          self.$router.push('/');
         }, function (error) {
             console.log(error);
         })
     },
     createAccount() {
+      const self = this;
         this.$store.dispatch('createAccount', {
             prenom: this.prenom,
             nom: this.nom,
@@ -96,13 +109,10 @@ export default {
             pseudo: this.pseudo,
             password: this.password,
             secret_key: this.secretKey,
-        }).then(function (response) {
-            console.log(response)
+        }).then(function () {
+            self.login();
         }, function (error) {
             console.log(error)
-            if(error.response.status == 409) {
-                alert('Utilisateur déjà existant')
-            }
         })
     },
   }
