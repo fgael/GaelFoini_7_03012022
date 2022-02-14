@@ -1,14 +1,28 @@
 <template>
-  <router-view/>
+  <body class="bodycontainer">
+    <div class="nav" v-if="currentUser">
+      <NavBar />
+    </div>
+    <main>
+     <router-view/>
+    </main>
+  </body>
+
 </template>
 
 <script>
 
+import NavBar from './components/NavBar.vue'
 export default {
   name: 'App',
   components: {
-
-  }
+  NavBar,
+  },
+  computed: {
+  currentUser() {
+    return this.$store.state.loggedIn;
+    }
+  },
 }
 </script>
 
@@ -37,5 +51,14 @@ body {
   padding:32px;
 }
 
+.nav {
+  width: 30%;
+}
+
+.container {
+    color: white;
+    font-size: 20px;
+    width: 300px;
+}
 
 </style>

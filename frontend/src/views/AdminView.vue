@@ -1,6 +1,6 @@
 <template>
-<div class="container">hello world
-  <p>{{currentUser}}</p>
+<div class="container">
+  <p>hello world - {{currentUser}}</p>
   <button @click="logout()" class="button">
     Déconnexion
   </button>
@@ -33,8 +33,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.container {
-    color: white;
-    font-size: 30px;
-}
+
 </style>

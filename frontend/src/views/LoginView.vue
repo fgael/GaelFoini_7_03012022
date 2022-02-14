@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="containerLogin">
     <img src="../assets/icon-left-font.png" alt="logo">
     <h1 class="container__title" v-if="type == 'login'">Connexion</h1>
     <h1 class="container__title" v-else>Inscription</h1>
@@ -63,7 +63,7 @@ export default {
       secretKey: '',
     }
   },
- computed: {
+  computed: {
     validatedFields() {
       if (this.type == 'create') {
         if (this.prenom !="" && this.nom !="" && this.email !="" && this.pseudo !="" && this.password != "") {
@@ -81,7 +81,6 @@ export default {
     },
     ...mapState(['status'])
  },
-
   methods: {
     switchCreateAccount() {
       this.type = "create";
@@ -113,14 +112,19 @@ export default {
             self.login();
         }, function (error) {
             console.log(error)
-        })
-    },
-  }
+      })
+    }
+  },
+  mounted: function () {
+    if (this.$store.state.loggedIn){ 
+      this.$router.push('/');
+    }
+  },
 }
 </script>
 
 <style lang="scss" scoped>
-.container {
+.containerLogin {
   max-width: 100%;
   width: 540px;
   background: white;
