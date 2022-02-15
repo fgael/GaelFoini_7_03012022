@@ -80,7 +80,7 @@ exports.login = async (req, res, next) => {
         email: user.email,
         role: user.role,
       },
-      process.env.JWT_SECRET,
+      process.env.REFRESH_TOKEN_SECRET,
       { expiresIn: process.env.JWT_DURINGREFRESH }
     );
     const tokens = {
@@ -98,16 +98,23 @@ exports.login = async (req, res, next) => {
 
 /* Controleur refresh token */
 exports.refresh = (req, res, next) => {
-  User.findOne({ where: { id: req.params.id }, raw: true })
-    .then((user) => {
-      res.status(200).json({
-        id: user.id,
-        token: jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-          expiresIn: process.env.JWT_DURING,
-        }),
-      });
-    })
-    .catch((error) => res.status(500).json({ error }));
+  const token = req.body.state.user.refresh_token;
+  jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, (err) => {
+    if (err) {
+      return res.status(401).json({ message: "Bad token" });
+    } else {
+      User.findOne({ where: { id: req.body.state.userInfos.id }, raw: true })
+      .then((user) => {
+        res.status(200).json({
+          id: user.id,
+          token: jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+            expiresIn: process.env.JWT_DURING,
+          }),
+        });
+      })
+      .catch((error) => res.status(500).json({ error }));
+    }
+  })
 };
 
 /* Controleur display all users */

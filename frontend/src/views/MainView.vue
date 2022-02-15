@@ -29,8 +29,29 @@ export default {
     if (!this.$store.state.loggedIn){ 
       this.$router.push('/login');
     }
+    const self = this
+    this.$store.dispatch('getAllUsers', {})
+    .then(function (res){
+      console.log(res)
+    })
+    .catch (function (error){
+      if (error.response.status == 401){
+        self.$store.dispatch('refresh', {})
+        .then(function (res){
+          let userTokens = JSON.parse(sessionStorage.getItem('userTokens'))
+          userTokens.access_token = res.data.token
+          sessionStorage.setItem('userTokens', JSON.stringify(userTokens))
+          self.$store.dispatch('getAllUsers', {})
+          location.reload()
+        }, function (error){
+          console.log(error)
+        })
+      }
+    })
   }
 }
+  
+
 
 </script>
 

@@ -4,14 +4,14 @@ import axios from 'axios';
 const instance = axios.create({
   baseURL: 'http://localhost:8888',
 });
-
+ 
 let loggedIn = false;
-let user = localStorage.getItem('userTokens');
+let user = sessionStorage.getItem('userTokens');
 let userInfos = localStorage.getItem('userInfos');
 if (!user) {
   user = JSON.stringify({});
 } else {
-  instance.defaults.headers.common['Authorization'] = user.access_token;
+  instance.defaults.headers.common['Authorization'] = JSON.parse(user).access_token;
   loggedIn = true;
 }
 if (!userInfos) {
@@ -31,8 +31,8 @@ const store = createStore({
       state.status = status;
     },
     logUser: function (state, user) {
-      instance.defaults.headers.common['Authorization'] = user.access_token;
-      localStorage.setItem('userTokens', JSON.stringify(user.userTokens));
+      instance.defaults.headers.common['Authorization'] = user.userTokens.access_token;
+      sessionStorage.setItem('userTokens', JSON.stringify(user.userTokens));
       localStorage.setItem('userInfos', JSON.stringify(user.userInfos));
       state.user = user.userTokens;
       state.userInfos = user.userInfos;
@@ -42,7 +42,7 @@ const store = createStore({
       state.user = {};
       state.userInfos = {};
       state.loggedIn = false;
-      localStorage.removeItem('userTokens');
+      sessionStorage.removeItem('userTokens');
       localStorage.removeItem('userInfos');
     },
   },
@@ -75,6 +75,30 @@ const store = createStore({
           })
           .catch(function (error) {
             commit('setStatus', 'error_create');
+            reject(error);
+          });
+      });
+    },
+    refresh: (refreshToken) => {
+      return new Promise((resolve, reject) => {
+        instance
+          .post('users/refresh', refreshToken)
+          .then(function (response) {
+            resolve(response);
+          })
+          .catch(function (error) {
+            reject(error);
+          });
+      });
+    },
+    getAllUsers: () => {
+      return new Promise((resolve, reject) => {
+        instance
+          .get('users/accounts')
+          .then(function (response) {
+            resolve(response);
+          })
+          .catch(function (error) {
             reject(error);
           });
       });

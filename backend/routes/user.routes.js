@@ -9,7 +9,7 @@ const multer = require("../middleware/multer-config");
 /* Routage User */
 router.put("/signup", userCtrl.signup);
 router.post("/login", userCtrl.login);
-router.post("/refresh", auth, userCtrl.refresh);
+router.post("/refresh", userCtrl.refresh);
 router.get("/accounts/", auth, admin, userCtrl.getAllAccounts);
 router.get("/accounts/:id", auth, userCtrl.getOneAccount);
 router.patch("/accounts/:id", auth, multer, userCtrl.updateAccount);
