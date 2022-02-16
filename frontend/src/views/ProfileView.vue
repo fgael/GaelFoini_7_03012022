@@ -1,12 +1,8 @@
 <template>
 <div class="container" v-if="currentUser">
-  <p>hello world - {{currentUser.pseudo}}</p>
-  <button @click="logout()" class="button">
-    Déconnexion
-  </button>
-  <div class="admin" v-if="currentUser.role == 1">
-      <router-link to="/admin" class="nav-link">AdminBoard</router-link>
-  </div>
+  <p>Bonjour {{currentUser.nom + ' ' + currentUser.prenom}}</p><br>
+  <p>Pseudo {{currentUser.pseudo}}</p><br>
+  <p>Votre email {{currentUser.email}}</p>
 </div>
 </template>
 

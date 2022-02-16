@@ -12,7 +12,7 @@
 
 <script>
 
-import NavBar from './components/NavBar.vue'
+import NavBar from '@/components/NavBar.vue'
 export default {
   name: 'App',
   components: {
@@ -38,27 +38,35 @@ export default {
   box-sizing: border-box;
 }
 
-#app {
-  max-width: 100%;
-}
-
 body {
   background-color: #091f43;
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  padding:32px;
 }
 
 .nav {
-  width: 30%;
+  width: 40%;
 }
 
 .container {
-    color: white;
+    color: black;
     font-size: 20px;
-    width: 300px;
+    height: 100vh;
+    width: 70vh;
+    border-radius: 0 16px 16px 0;
+    padding: 32px;
+    background: white;
+
+    p {
+    text-align: left;
+    }
 }
+
+li {
+  list-style: none;
+}
+
 
 </style>

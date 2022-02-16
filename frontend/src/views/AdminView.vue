@@ -1,9 +1,7 @@
 <template>
 <div class="container">
   <p>hello world - {{currentUser}}</p>
-  <button @click="logout()" class="button">
-    Déconnexion
-  </button>
+  <button @click="getAllUsers()">Afficher tous les utilisateurs</button>
 </div>
 </template>
 
@@ -20,10 +18,18 @@ export default {
     logout() {
       this.$store.commit('logout');
       this.$router.push('/login');
-    }
-  },
-  mounted: function () {
-    if (this.$store.state.user.access_token == ''){
+    },
+    getAllUsers() {
+      this.$store.dispatch('getAllUsers', {       
+      }).then(function (res) {
+      console.log(res)
+      }, function (error) {
+      console.log(error)
+      })
+      }
+    },
+    mounted: function () {
+    if (!this.$store.state.loggedIn){
       this.$router.push('/login');
       return;
     }
