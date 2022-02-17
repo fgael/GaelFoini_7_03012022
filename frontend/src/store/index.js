@@ -9,27 +9,26 @@ const instanceRefresh = axios.create({
   baseURL: 'http://localhost:8888',
 });
 
-// Mise en place tokens back vers front pour requete
+// Mise en place tokens pour requete
 instance.interceptors.request.use(async config => {
-  const token = JSON.parse(sessionStorage.getItem('userTokens'));
+const token = JSON.parse(sessionStorage.getItem('userTokens'));
   if (token) {
     config.headers.Authorization = token.access_token;
   }
   return config;
 });
 
-
+let refreshTime = []
 instance.interceptors.response.use(
   (response) => {
-    // Suppression tokens si pas de requete pendant duree defini apres expiration access token
-    let refreshTime = []
+    // Suppression tokens si pas de requete pendant duree defini
     refreshTime.push((Math.round(+new Date() / 1000)))
     const token = JSON.parse(sessionStorage.getItem('userTokens'));
     if (!token){
       return response;
     } else {
-      // duree avant suppression (- 300 = 5min)
-        if (refreshTime[refreshTime.length - 2] > (Math.round(+new Date() / 1000) - 300)) {
+      // duree avant suppression (- 900 = 15min)
+        if (refreshTime[refreshTime.length - 2] > (Math.round(+new Date() / 1000) - 2700)) {
           return response;
       } else {
         sessionStorage.removeItem('userTokens');
@@ -38,7 +37,7 @@ instance.interceptors.response.use(
       }
     }
   },
-  // Si token expire fonction refreshToken
+  // access token expire : refreshToken
   async function (error) {
     const originalRequest = error.config;
     if (error.response.status === 401 && !originalRequest._retry) {
