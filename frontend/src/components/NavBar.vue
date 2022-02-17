@@ -42,6 +42,7 @@ export default {
     background: #515ad1;
     height: 100vh;
     border-radius: 16px 0 0 16px;
+
     img {
       max-height: 2rem;
     }

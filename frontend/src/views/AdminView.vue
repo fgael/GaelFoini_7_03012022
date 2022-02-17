@@ -23,8 +23,8 @@ export default {
       this.$store.dispatch('getAllUsers', {       
       }).then(function (res) {
       console.log(res)
-      }, function (error) {
-      console.log(error)
+      }, function () {
+      // console.log(error)
       })
       }
     },

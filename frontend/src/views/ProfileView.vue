@@ -21,8 +21,8 @@ export default {
       this.$router.push('/login');
     }
   },
-  mounted: function () {
-    if (this.$store.state.user.access_token == ''){
+    mounted: function () {
+    if (!this.$store.state.loggedIn){
       this.$router.push('/login');
       return;
     }
