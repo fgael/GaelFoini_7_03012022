@@ -1,11 +1,14 @@
 <template>
 <div class="container">
   <p>hello world - {{currentUser}}</p>
-  <button @click="getAllUsers()">Afficher tous les utilisateurs</button>
+  <button @click="getUsersById(currentUser.id)">Afficher tous les utilisateurs</button>
+  <p>hello world - {{users}}</p>
 </div>
 </template>
 
 <script>
+
+import usersService from '@/services/users.js'
 
 export default {
   name: 'AdminView',
@@ -14,17 +17,24 @@ export default {
       return this.$store.state.userInfos;
     }
   },
+  data() {
+    return {
+      users: [],
+    }
+  },
   methods: {
     logout() {
       this.$store.commit('logout');
       this.$router.push('/login');
     },
-    getAllUsers() {
-      this.$store.dispatch('getAllUsers', {       
-      }).then(function (res) {
+    getUsersById(id) {
+      usersService.getUsersById(id)
+      .then((res) => {
       console.log(res)
-      }, function () {
-      // console.log(error)
+      this.users = res.data
+      })
+      .catch ((error) => {
+      console.log(error)
       })
       }
     },
