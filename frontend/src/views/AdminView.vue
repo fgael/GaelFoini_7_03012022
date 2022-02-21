@@ -8,7 +8,7 @@
 
 <script>
 
-import usersService from '@/services/users.js'
+import userServices from '@/services/users.js'
 
 export default {
   name: 'AdminView',
@@ -23,12 +23,8 @@ export default {
     }
   },
   methods: {
-    logout() {
-      this.$store.commit('logout');
-      this.$router.push('/login');
-    },
     getUsersById(id) {
-      usersService.getUsersById(id)
+      userServices.getUsersById(id)
       .then((res) => {
       console.log(res)
       this.users = res.data

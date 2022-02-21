@@ -168,7 +168,35 @@ exports.updateAccount = async (req, res, next) => {
     }
     // Mise à jour de l'utilisateur
     await User.update(req.body, { where: { id: userId } });
-    return res.json({ message: "User updated" });
+    let newUserData = await User.findOne({ where: { id: userId }, raw: true });
+    const token = jwt.sign(
+      {
+        id: newUserData.id,
+        nom: newUserData.nom,
+        prenom: newUserData.prenom,
+        email: newUserData.email,
+        role: newUserData.role,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: process.env.JWT_DURING }
+    );
+  
+    const refreshToken = jwt.sign(
+      {
+        id: newUserData.id,
+        nom: newUserData.nom,
+        prenom: newUserData.prenom,
+        email: newUserData.email,
+        role: newUserData.role,
+      },
+      process.env.REFRESH_TOKEN_SECRET,
+      { expiresIn: process.env.JWT_DURINGREFRESH }
+    );
+    const tokens = {
+      access_token: token,
+      refresh_token: refreshToken,
+    }
+    return res.json({ userTokens: tokens, userInfos: newUserData, message: "User updated" });
   } catch (err) {
     return res.status(500).json({ message: "Database Error", error: err });
   }
@@ -183,7 +211,7 @@ exports.deleteAccount = (req, res, next) => {
   }
   User.findOne({ where: { id: userId }, raw: true })
     .then((user) => {
-      if (req.tokenId !== user.id || req.role === 1) {
+      if (req.tokenId !== user.id || req.role !== 1) {
         return res.status(401).json({ message: "Unauthorized" });
       }
       // Suppression de l'utilisateur

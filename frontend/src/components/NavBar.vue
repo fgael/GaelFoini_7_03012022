@@ -8,7 +8,6 @@
         </li>
         <li><router-link to="/" class="nav-link">Accueil</router-link></li>
         <li><router-link to="/profile" class="nav-link">Profil</router-link></li>
-        <li>Créer un post</li>
         <li @click="logout()">Déconnexion</li>
     </div>
 </template>

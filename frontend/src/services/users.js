@@ -2,7 +2,7 @@ import { instance } from '@/helpers/interceptor';
 
 const API_URL = "/users/accounts/";
 
-class UserService {
+class userServices {
   getAllUsers() {
     return instance.get(API_URL + "");
   }
@@ -11,9 +11,13 @@ class UserService {
     return instance.get(API_URL + id);
   }
 
-  deleteUsersById(id) {
+  deleteUserById(id) {
     return instance.delete(API_URL + id);
   }
+  
+  // trashUserById(id) {
+  //   return instance.delete(API_URL + "trash/" + id);
+  // }
 }
 
-export default new UserService();
+export default new userServices();

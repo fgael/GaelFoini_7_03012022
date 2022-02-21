@@ -39,6 +39,14 @@ const store = createStore({
       sessionStorage.removeItem("userTokens");
       localStorage.removeItem("userInfos");
     },
+    userUpdate: function (state, user) {
+      sessionStorage.removeItem("userTokens");
+      localStorage.removeItem("userInfos");
+      state.user = user.userTokens;
+      state.userInfos = user.userInfos;
+      sessionStorage.setItem("userTokens", JSON.stringify(user.userTokens));
+      localStorage.setItem("userInfos", JSON.stringify(user.userInfos));
+    }
   },
   actions: {
     login: ({ commit }, userInfos) => {
@@ -73,8 +81,26 @@ const store = createStore({
           });
       });
     },
+    userUpdate: ({ commit }, content) => {
+      return new Promise((resolve, reject) => {
+        instance
+          .patch(`users/accounts/${content.id}`, content.user)
+          .then(function (response) {
+            commit("userUpdate", response.data);
+            resolve(response);
+          })
+          .catch(function (error) {
+            reject(error);
+          });
+      });
+    },
   },
   modules: {},
 });
 
 export default store;
+
+
+// modifyAccount(id, content) {
+//   return instance.patch(API_URL + id, content);
+// }

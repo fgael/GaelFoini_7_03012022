@@ -30,6 +30,7 @@ instance.interceptors.response.use(
         if (inactivityTime[inactivityTime.length - 2] > (Math.round(+new Date() / 1000) - 2700)) {
           return response;
       } else {
+        alert("Veuillez vous reconnecter - Temps d'inactivité supérieur à 45 minutes")
         sessionStorage.removeItem('userTokens');
         localStorage.removeItem('userInfos');
         location.reload();

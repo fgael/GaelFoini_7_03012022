@@ -43,6 +43,7 @@ exports.getOnePost = async (req, res, next) => {
 
 /* Controleur création post */
 exports.createPost = async (req, res, next) => {
+  console.log(req.body)
   const { user_id, title, content, imageUrl } = req.body;
   // const postObject = JSON.parse(req.body.post);
   // const post = new Post({
@@ -101,7 +102,7 @@ exports.deletePost = (req, res, next) => {
     return res.status(400).json({ message: "Missing parameter" });
   }
   Post.findOne({ where: { id: postId }, raw: true }).then((post) => {
-    if (req.tokenId === post.user_id || req.role === 1) {
+    if (req.tokenId === post.user_id || req.role !== 1) {
       // Suppression du post
       Post.destroy({ where: { id: postId }, force: true })
         .then(() => res.status(204).json({}))
@@ -203,7 +204,7 @@ exports.deleteComment = (req, res, next) => {
     return res.status(400).json({ message: "Missing parameter" });
   }
   Comment.findOne({ where: { id: commentId }, raw: true }).then((comment) => {
-    if (req.tokenId === comment.user_id || req.role === 1) {
+    if (req.tokenId === comment.user_id || req.role !== 1) {
       // Suppression du comment
       Comment.destroy({ where: { id: commentId }, force: true })
         .then(() => res.status(204).json({}))

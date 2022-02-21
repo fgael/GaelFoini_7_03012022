@@ -7,9 +7,9 @@ const admin = require("../middleware/admin");
 const multer = require("../middleware/multer-config");
 
 /* Routage Post */
-router.get("", auth, postCtrl.getAllPosts);
+router.get("/", auth, postCtrl.getAllPosts);
 router.get("/:id", auth, postCtrl.getOnePost);
-router.put("", auth, multer, postCtrl.createPost);
+router.put("/", auth, multer, postCtrl.createPost);
 router.patch("/:id", auth, multer, postCtrl.updatePost);
 router.delete("/:id", auth, postCtrl.deletePost);
 router.delete("/trash/:id", auth, admin, postCtrl.trashPost);
