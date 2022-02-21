@@ -1,5 +1,5 @@
 <template>
-  <div class="bloc-modale" v-if="revele">
+  <div class="bloc-modale" v-if="revele" :key="componentKey">
     <div class="overlay" v-on:click="toggleModale"></div>
     <div class="modale">
       <div @click="toggleModale" class="btn-modale">X</div>
@@ -28,7 +28,7 @@
 
 <script>
 
-import postServices from '@/services/users.js'
+import postServices from '@/services/posts.js'
 
 export default {
   name: "ModalePost",
@@ -36,23 +36,30 @@ export default {
   data() {
     return {
       post: {},
+      componentKey: 0,
     }
   },
   methods: {
     createPost() {
       let post = {
+        user_id: this.$store.state.userInfos.id,
         title: this.post.title,
         content: this.post.content,
+        imageUrl: "pouet",
       }
       postServices.createPost(post)
       .then((res) => {
         console.log(res)
+        this.forceRerender()
       })
       .catch ((error) => {
         console.log(error)
       })
     },
-  }    
+    forceRerender() {
+      this.componentKey += 1;
+    }
+  },    
 }
 
 </script>

@@ -43,7 +43,6 @@ exports.getOnePost = async (req, res, next) => {
 
 /* Controleur création post */
 exports.createPost = async (req, res, next) => {
-  console.log(req.body)
   const { user_id, title, content, imageUrl } = req.body;
   // const postObject = JSON.parse(req.body.post);
   // const post = new Post({

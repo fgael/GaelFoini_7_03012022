@@ -1,10 +1,10 @@
 import { instance } from '@/helpers/interceptor';
 
-const API_URL = "/users/posts/";
+const API_URL = "/posts/";
 
 class postServices {
   getAllPosts() {
-    return instance.get(API_URL + "");
+    return instance.get(API_URL);
   }
 
   getOnePost(id) {

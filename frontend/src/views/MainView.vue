@@ -4,16 +4,17 @@
   <modale :revele="revele" :toggleModale="toggleModale"></modale>
   <button @click="toggleModale">Créer un post</button>
   <div class="post-container">
-    <!-- <div class="post">
-      {{currentPost.title}}
-    </div> -->
+    <div v-for="post in posts" :key="post.id" class="post">
+      <p>{{post.title}}</p>
+      <p>{{post.content}}</p>
+    </div>
   </div>
 </div>
 </template>
 
 <script>
 
-// import postServices from '@/services/users.js'
+import postServices from '@/services/posts.js'
 import Modale from "@/components/ModalePost.vue";
 
 export default {
@@ -21,6 +22,7 @@ export default {
   data() {
     return {
       revele: false,
+      posts: [],
     }
   },
   components: {
@@ -41,6 +43,14 @@ export default {
       this.$router.push('/login');
       return;
     }
+    postServices.getAllPosts()
+    .then((res) => {
+      console.log(res)
+      this.posts = res.data.data
+    })
+    .catch ((error) => {
+      console.log(error)
+    })
   }
 }
   
