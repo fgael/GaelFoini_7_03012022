@@ -26,14 +26,14 @@ import Modale from "@/components/ModaleProfile.vue";
 
 export default {
   name: 'ProfileView',
-  computed: {
-    currentUser() {
-      return this.$store.state.userInfos;
-    }
-  },
   data() {
     return {
       revele: false,
+    }
+  },
+  computed: {
+    currentUser() {
+      return this.$store.state.userInfos;
     }
   },
   components: {
@@ -52,6 +52,10 @@ export default {
     },
     toggleModale: function(){
       this.revele = !this.revele;
+    },
+    logout() {
+      this.$store.commit('logout');
+      this.$router.push('/login');
     },
   },
     mounted: function () {

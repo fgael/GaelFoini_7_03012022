@@ -4,12 +4,21 @@
     Bonjour {{currentUser.pseudo}}
   </div>
   <div class="post-container">
-    <div v-for="post in posts" :key="post.id" class="posts">
+    <div v-for="post in posts.slice().reverse()" :key="post.id" class="posts">
       <div class="post-title">
         {{post.title}}
       </div>
+      <div class="post-img">
+          <img :src="post.imageUrl" alt="image du post">
+      </div>
       <div class="post-content">
         {{post.content}}
+        <div class="modifyPostBtn">
+          <button>Editer le post</button>
+        </div>
+        <div class="deletePostBtn">
+          <button>Supprimer le post</button>
+        </div>
       </div>
     </div>
   </div>
@@ -65,16 +74,30 @@ export default {
   .post-title {
     display: flex;
     justify-content: center;
+    border-radius: 1rem 1rem 0 0;
+    padding: 1.2rem;
     background: #1976d2;
     color: white;
-    border-radius: 1rem 1rem 0 0;
+
   }
   .post-content {
-    padding: 0.5rem;
     background: #f1f1f1;
     border-radius: 0 0 1rem 1rem;
+    padding: 1rem;
+  }
+  .post-img{
+    display: flex;
+    img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    }
   }
 }
+
+
+
 
 
 </style>

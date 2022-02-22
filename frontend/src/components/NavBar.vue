@@ -8,25 +8,18 @@
         </li>
         <li><router-link to="/" class="nav-link">Accueil</router-link></li>
         <li><router-link to="/profile" class="nav-link">Profil</router-link></li>
-        <modale :revele="revele" :toggleModale="toggleModale"></modale>
-        <li @click="toggleModale">Créer un post</li>
+        <li><router-link to="/post" class="nav-link">New Post</router-link></li>
         <li @click="logout()">Déconnexion</li>
     </div>
 </template>
 
 <script>
 
-import Modale from "@/components/ModalePost.vue";
-
 export default {
   name: 'NavBar',
   data() {
     return {
-      revele: false,
     }
-  },
-  components: {
-    modale: Modale
   },
   computed: {
     currentUser() {
@@ -38,17 +31,16 @@ export default {
       this.$store.commit('logout');
       this.$router.push('/login');
     },
-    toggleModale: function(){
-      this.revele = !this.revele;
-    },
   },
 }
 </script>
 
 <style lang="scss" scoped>
+
 .navcontainer {
     display: flex;
     flex-direction: column;
+    flex-grow: 2;
     gap: 1rem;
     color: white;
     font-size: 20px;
@@ -63,4 +55,5 @@ export default {
       color: white;
     }
 }
+
 </style>

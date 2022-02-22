@@ -15,7 +15,7 @@ router.delete("/:id", auth, postCtrl.deletePost);
 router.delete("/trash/:id", auth, admin, postCtrl.trashPost);
 router.post("/untrash/:id", auth, admin, postCtrl.untrashPost);
 router.put("/comment", auth, postCtrl.createComment);
-router.put("/comment", auth, postCtrl.updateComment);
+router.patch("/comment", auth, postCtrl.updateComment);
 router.delete("/comment/:id", auth, postCtrl.deleteComment);
 router.delete("/comment/trash/:id", auth, admin, postCtrl.trashComment);
 router.post("/comment/untrash/:id", auth, admin, postCtrl.untrashComment);

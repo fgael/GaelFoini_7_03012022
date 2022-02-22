@@ -43,21 +43,20 @@ exports.getOnePost = async (req, res, next) => {
 
 /* Controleur création post */
 exports.createPost = async (req, res, next) => {
-  const { user_id, title, content, imageUrl } = req.body;
-  // const postObject = JSON.parse(req.body.post);
-  // const post = new Post({
-  //   ...postObject,
-  //   imageUrl: `${req.protocol}://${req.get("host")}/images/${
-  //     req.file.filename
-  //   }`,});
+  const { user_id, title, content } = req.body;
+  const post = {
+    ...req.body,
+    imageUrl: `${req.protocol}://${req.get("host")}/images/${
+      req.file.filename
+    }`};
   // Validation des données reçues
-  if (!user_id || !title || !content || !imageUrl) {
+  if (!user_id || !title || !content) {
     return res.status(400).json({ message: "Missing Data" });
   }
   try {
     // Création du post
-    let post = await Post.create(req.body); // Editer a l'implementation des images (let newPost / Post.create(post))
-    return res.json({ message: "Post Created", data: post });
+    let newPost = await Post.create(post); 
+    return res.json({ message: "Post Created", data: newPost });
   } catch (err) {
     return res.status(500).json({ message: "Database Error", error: err });
   }

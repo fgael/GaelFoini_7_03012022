@@ -211,15 +211,16 @@ exports.deleteAccount = (req, res, next) => {
   }
   User.findOne({ where: { id: userId }, raw: true })
     .then((user) => {
-      if (req.tokenId !== user.id || req.role !== 1) {
-        return res.status(401).json({ message: "Unauthorized" });
-      }
-      // Suppression de l'utilisateur
-      User.destroy({ where: { id: userId }, force: true })
+      if (req.tokenId === user.id || req.role === 1) {
+        // Suppression de l'utilisateur
+        User.destroy({ where: { id: userId }, force: true })
         .then(() => res.status(204).json({}))
         .catch((err) =>
           res.status(500).json({ message: "Database Error", error: err })
         );
+      }else{
+        return res.status(401).json({ message: "Unauthorized" });
+      }
     })
     .catch((err) =>
       res.status(500).json({ message: "Database Error", error: err })

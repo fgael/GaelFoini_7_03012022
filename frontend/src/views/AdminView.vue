@@ -1,8 +1,24 @@
 <template>
-<div class="container">
-  <p>hello world - {{currentUser}}</p>
-  <button @click="getUsersById(currentUser.id)">Afficher tous les utilisateurs</button>
-  <p>hello world - {{users}}</p>
+<div class="container" v-if="currentUser">
+  <div class="current-user">
+    Bonjour {{currentUser.pseudo}}
+  </div>
+  <div v-for="user in users" :key="user.id" class="user">
+    <div class="lastName">
+      Nom de famille : {{user.nom}}
+    </div>
+    <div class="firstName">
+      Prénom : {{user.prenom}}
+    </div>
+    <div class="nickName">
+      Pseudo : {{user.pseudo}}
+    </div>
+    <div class="role">
+      Administrateur : {{user.role}}
+    </div>
+    <button @click="deleteUserById(currentUser.id)">Supprimer compte</button>
+    <button @click="modifyRole(currentUser.id)">Modifier rôle</button>
+  </div>
 </div>
 </template>
 
@@ -12,29 +28,41 @@ import userServices from '@/services/users.js'
 
 export default {
   name: 'AdminView',
-  computed: {
-    currentUser() {
-      return this.$store.state.userInfos;
-    }
-  },
   data() {
     return {
       users: [],
     }
   },
+  computed: {
+    currentUser() {
+      return this.$store.state.userInfos;
+    }
+  },
   methods: {
-    getUsersById(id) {
-      userServices.getUsersById(id)
+    getAllUsers() {
+      userServices.getAllUsers()
       .then((res) => {
       console.log(res)
-      this.users = res.data
+      this.users = res.data.data
       })
       .catch ((error) => {
       console.log(error)
       })
       }
     },
-    mounted: function () {
+    deleteUserById(id) {
+      userServices.deleteUserById(id)
+      .then((res) => {
+        console.log(res)
+      })
+      .catch ((error) => {
+        console.log(error)
+      })
+    },
+    beforeMount() {
+      this.getAllUsers()
+    },
+    mounted() {
     if (!this.$store.state.loggedIn){
       this.$router.push('/login');
       return;
@@ -45,5 +73,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.user {
+  border: 1px solid black;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  margin: 1rem 0;
+}
 
 </style>
