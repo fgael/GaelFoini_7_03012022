@@ -11,8 +11,12 @@ class postServices {
     return instance.get(API_URL + id);
   }
 
+  updatePost(id) {
+    return instance.patch(API_URL + id);
+  }
+
   createPost(content) {
-      return instance.put(API_URL, content);
+    return instance.put(API_URL, content);
   }
 
   deletePost(id) {

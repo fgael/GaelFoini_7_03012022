@@ -99,8 +99,3 @@ const store = createStore({
 });
 
 export default store;
-
-
-// modifyAccount(id, content) {
-//   return instance.patch(API_URL + id, content);
-// }

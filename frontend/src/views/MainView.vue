@@ -14,10 +14,10 @@
       <div class="post-content">
         {{post.content}}
         <div class="modifyPostBtn">
-          <button>Editer le post</button>
+          <button @click="updatePost()">Editer le post</button>
         </div>
         <div class="deletePostBtn">
-          <button>Supprimer le post</button>
+          <button @click="deletePost()">Supprimer le post</button>
         </div>
       </div>
     </div>
@@ -70,7 +70,10 @@ export default {
 
 .posts {
   border-radius: 1rem;
-  margin: 1rem;
+  margin: 3rem 1rem;
+  box-shadow: 1px 9px 29px 6px rgba(145,145,145,0.74);
+  -webkit-box-shadow: 1px 9px 29px 6px rgba(145,145,145,0.50);
+  -moz-box-shadow: 1px 9px 29px 6px rgba(145,145,145,0.50);
   .post-title {
     display: flex;
     justify-content: center;

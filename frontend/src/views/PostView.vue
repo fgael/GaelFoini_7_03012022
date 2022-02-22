@@ -32,7 +32,7 @@ export default {
   data() {
     return {
         post: {},
-        postImg: null,
+        postImg:'',
     }
   },
   methods: {

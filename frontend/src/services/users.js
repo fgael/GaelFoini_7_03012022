@@ -11,8 +11,6 @@ class userServices {
     return instance.get(API_URL + id);
   }
 
-  // currentUser.id
-
   deleteUserById(id) {
     return instance.delete(API_URL + id);
   }

@@ -16,8 +16,8 @@
     <div class="role">
       Administrateur : {{user.role}}
     </div>
-    <button @click="deleteUserById(currentUser.id)">Supprimer compte</button>
-    <button @click="modifyRole(currentUser.id)">Modifier rôle</button>
+    <button @click="deleteUserById()">Supprimer compte</button>
+    <button @click="modifyRole()">Modifier rôle</button>
   </div>
 </div>
 </template>
