@@ -134,7 +134,6 @@ export default {
     display: block;
     margin: 15% auto;
     width: 75%;
-
   }
   .container__action {
     color: #2196f3;

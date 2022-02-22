@@ -26,7 +26,7 @@
             <label for="password">Mot de passe</label>
             <input v-model="user.password" class="form-input" id="password" type="text" placeholder="password" />
           </div> -->
-          <button @click="modifyAccount">Valider</button>
+          <button @click="modifyAccount()">Valider</button>
         </form>
       </div>
     </div>
@@ -54,8 +54,8 @@ export default {
         }, function (error) {
             console.log(error)
       })
-    },
-  }    
+    }
+  }
 }
 
 </script>

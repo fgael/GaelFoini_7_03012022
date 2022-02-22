@@ -1,5 +1,5 @@
 <template>
-  <div class="bloc-modale" v-if="revele" :key="componentKey">
+  <div class="bloc-modale" v-if="revele">
     <div class="overlay" v-on:click="toggleModale"></div>
     <div class="modale">
       <div @click="toggleModale" class="btn-modale">X</div>
@@ -36,7 +36,6 @@ export default {
   data() {
     return {
       post: {},
-      componentKey: 0,
     }
   },
   methods: {
@@ -50,16 +49,12 @@ export default {
       postServices.createPost(post)
       .then((res) => {
         console.log(res)
-        this.forceRerender()
       })
       .catch ((error) => {
         console.log(error)
       })
-    },
-    forceRerender() {
-      this.componentKey += 1;
     }
-  },    
+  }   
 }
 
 </script>
@@ -92,6 +87,7 @@ export default {
   padding: 1.5rem;
   position: fixed;
   top: 30%;
+  width: 40vh;
   max-width: 60vh;
   border-radius: 1rem;
 }

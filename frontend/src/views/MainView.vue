@@ -1,12 +1,16 @@
 <template>
 <div class="container" v-if="currentUser">
-  <p>Bonjour - {{currentUser.pseudo}}</p>
-  <modale :revele="revele" :toggleModale="toggleModale"></modale>
-  <button @click="toggleModale">Créer un post</button>
+  <div class="current-user">
+    Bonjour {{currentUser.pseudo}}
+  </div>
   <div class="post-container">
-    <div v-for="post in posts" :key="post.id" class="post">
-      <p>{{post.title}}</p>
-      <p>{{post.content}}</p>
+    <div v-for="post in posts" :key="post.id" class="posts">
+      <div class="post-title">
+        {{post.title}}
+      </div>
+      <div class="post-content">
+        {{post.content}}
+      </div>
     </div>
   </div>
 </div>
@@ -15,27 +19,17 @@
 <script>
 
 import postServices from '@/services/posts.js'
-import Modale from "@/components/ModalePost.vue";
 
 export default {
   name: 'MainView',
   data() {
     return {
-      revele: false,
       posts: [],
     }
-  },
-  components: {
-    modale: Modale
   },
   computed: {
   currentUser() {
     return this.$store.state.userInfos;
-    }
-  },
-  methods: {
-    toggleModale: function(){
-      this.revele = !this.revele;
     }
   },
   mounted: function () {
@@ -59,5 +53,28 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.current-user {
+  display: flex;
+  justify-content: center;
+}
+
+.posts {
+  border-radius: 1rem;
+  margin: 1rem;
+  .post-title {
+    display: flex;
+    justify-content: center;
+    background: #1976d2;
+    color: white;
+    border-radius: 1rem 1rem 0 0;
+  }
+  .post-content {
+    padding: 0.5rem;
+    background: #f1f1f1;
+    border-radius: 0 0 1rem 1rem;
+  }
+}
+
 
 </style>
