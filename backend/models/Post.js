@@ -15,6 +15,11 @@ module.exports = (sequelize, Sequelize) => {
         type: DataTypes.INTEGER(10),
         allowNull: false,
       },
+      author: {
+        type: DataTypes.TEXT,
+        defaultValue: "",
+        allowNull: false,
+      },
       title: {
         type: DataTypes.TEXT,
         defaultValue: "",

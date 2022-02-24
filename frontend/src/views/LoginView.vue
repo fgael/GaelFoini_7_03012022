@@ -1,39 +1,42 @@
 <template>
-  <div class="containerLogin">
-    <img src="../assets/icon-left-font.png" alt="logo">
-    <h1 class="container__title" v-if="type == 'login'">Connexion</h1>
-    <h1 class="container__title" v-else>Inscription</h1>
-      <p class="container__subtitle" v-if="type == 'login'">
-      Tu n'as pas encore de compte ?
-      <span class="container__action" @click="switchCreateAccount">Créer un compte</span>
+  <div class="container">
+    <div class="containerLog">
+      <div class="logo">
+        <img src="../assets/icon-left-font.png" alt="logo">
+      </div>
+      <h1 class="containerTitle" v-if="type == 'login'">Connexion</h1>
+      <h1 class="containerTitle" v-else>Inscription</h1>
+      <p class="containerSubtitle" v-if="type == 'login'">
+        Tu n'as pas encore de compte ?
+        <span class="containerAction" @click="switchCreateAccount">Créer un compte</span>
       </p>
-      <p class="container__subtitle" v-else>
-      Tu as déjà un compte ?
-      <span class="container__action" @click="switchLogin">Se connecter</span>
+      <p class="containerSubtitle" v-else>
+        Tu as déjà un compte ?
+        <span class="containerAction" @click="switchLogin">Se connecter</span>
       </p>
-      <div class="form-group" v-if="type == 'create'">
-        <input v-model="prenom" class="form-group__input" type="text" placeholder="Prénom" />
-        <input v-model="nom" class="form-group__input" type="text" placeholder="Nom" />
+      <div class="formGroup" v-if="type == 'create'">
+        <input v-model="prenom" class="formGroup_input" type="text" placeholder="Prénom" />
+        <input v-model="nom" class="formGroup_input" type="text" placeholder="Nom" />
       </div>
-      <div class="form-group">
-        <input v-model="email" class="form-group__input" type="text" placeholder="E-mail" />
+      <div class="formGroup">
+        <input v-model="email" class="formGroup_input" type="text" placeholder="E-mail" />
       </div>
-      <div class="form-group" v-if="type == 'create'">
-        <input v-model="pseudo" class="form-group__input" type="text" placeholder="Pseudo" />
+      <div class="formGroup" v-if="type == 'create'">
+        <input v-model="pseudo" class="formGroup_input" type="text" placeholder="Pseudo" />
       </div>
-      <div class="form-group">
-        <input v-model="password" class="form-group__input" type="password" placeholder="Mot de passe" />
+      <div class="formGroup">
+        <input v-model="password" class="formGroup_input" type="password" placeholder="Mot de passe" />
       </div>
-      <div class="form-group" v-if="type == 'create'">
-        <input v-model="secretKey" class="form-group__input" type="text" placeholder="Formule magique" />
+      <div class="formGroup" v-if="type == 'create'">
+        <input v-model="secretKey" class="formGroup_input" type="text" placeholder="Formule magique" />
       </div>
-      <div class="form-group" v-if="type == 'login' && status == 'error_login'">
+      <div class="formGroup" v-if="type == 'login' && status == 'error_login'">
         Adresse e-mail et/ou mot de passe invalide
       </div>
-      <div class="form-group" v-if="type == 'create' && status == 'error_create'">
+      <div class="formGroup" v-if="type == 'create' && status == 'error_create'">
         Adresse e-mail déjà utilisée
       </div>
-      <div class="form-group">
+      <div class="formGroup">
         <button @click="login()" class="button" :class="{'button--disabled' : !validatedFields}" v-if="type == 'login'">
           <span v-if="status == 'loading'">Connexion en cours ... </span>
           <span v-else>Connexion</span>
@@ -43,6 +46,7 @@
           <span v-else>Créer mon compte</span>
         </button>
       </div>
+    </div>
   </div>
 </template>
 
@@ -124,77 +128,88 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.containerLogin {
-  max-width: 100%;
-  width: 540px;
-  background: white;
-  border-radius: 16px;
-  padding: 32px;
-    img {
-    display: block;
-    margin: 15% auto;
-    width: 75%;
-  }
-  .container__action {
-    color: #2196f3;
-    text-decoration: underline;
-  }
-  .container__action:hover {
-    cursor: pointer;
-  }
-  .container__title {
-    text-align: center;
-    font-weight: 800;
-    padding-bottom: 1rem;
-  }
-  .container__subtitle {
-    text-align: center;
-    color: #666;
-    font-weight: 500;
-    padding-bottom: 1rem;
-  }
-  .form-group {
-    display: flex;
-    margin: 16px 0px;
-    gap: 16px;
-    flex-wrap: wrap;
-    .form-group__input {
-      padding: 8px;
-      border: none;
-      border-radius: 8px;
-      background: #f2f2f2;
-      font-weight: 500;
-      font-size: 16px;
-      flex: 1;
-      min-width: 100px;
-      color: black;
-    }
-    .form-group__input::placeholder {
-      color: #aaaaaa;
-    }
-    .button {
-      background: #1976d2 ;
-      color: white;
-      border-radius: 8px;
-      font-weight: 800;
-      font-size: 15px;
-      border: none;
-      width: 100%;
-      padding: 16px;
-      transition: 0.4s background-color;
-    }
-    .button:hover {
-      cursor: pointer;
-      background: #3da9fc;
-    }
-    .button--disabled {
-      background: #cecece;
-      color: #ececec;
-    }
-    .button--disabled:hover {
-      cursor: not-allowed;
-      background: #cecece;
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #091f43;
+  overflow-y: hidden;
+  .containerLog {
+    width: 33rem;
+    background: white;
+    border-radius: 1rem;
+    padding: 2rem;
+    height: 40rem;
+      .logo {
+        display: flex;
+        justify-content: center;
+        height: 3.5rem;
+        margin: 3.5rem 0;
+      }
+      .containerTitle {
+        text-align: center;
+        font-weight: 700;
+        padding-bottom: 1rem;
+      } 
+      .containerAction {
+        color: #2196f3;
+        text-decoration: underline;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+      .containerSubtitle {
+        text-align: center;
+        color: #666;
+        font-weight: 500;
+        padding-bottom: 1rem;
+      }
+      .formGroup {
+        display: flex;
+        margin: 16px 0px;
+        gap: 16px;
+        flex-wrap: wrap;
+        .formGroup_input {
+          padding: 8px;
+          border: none;
+          border-radius: 8px;
+          background: #f2f2f2;
+          font-weight: 500;
+          font-size: 16px;
+          flex: 1;
+          min-width: 100px;
+          color: black;
+        }
+        .formGroup_input::placeholder {
+          color: #aaaaaa;
+        }
+        .button {
+          background: #1976d2 ;
+          color: white;
+          border-radius: 8px;
+          font-weight: 800;
+          font-size: 15px;
+          border: none;
+          width: 100%;
+          padding: 16px;
+          transition: 0.4s background-color;
+          &:hover {
+            cursor: pointer;
+            background: #3da9fc;
+          }
+        }
+        .button--disabled {
+        background: #cecece;
+        color: #ececec;
+        &:hover {
+          cursor: not-allowed;
+          background: #cecece;
+        }
+      }
     }
   }
 }
+
+
 </style>

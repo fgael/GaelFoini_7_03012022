@@ -43,7 +43,7 @@ exports.getOnePost = async (req, res, next) => {
 
 /* Controleur création post */
 exports.createPost = async (req, res, next) => {
-  const { user_id, title, content } = req.body;
+  const { user_id, title, content, author } = req.body;
   const post = req.file ?
   {
     ...req.body,
@@ -53,7 +53,7 @@ exports.createPost = async (req, res, next) => {
     ...req.body,
   }
   // Validation des données reçues
-  if (!user_id || !title || !content) {
+  if (!user_id || !title || !content || !author) {
     return res.status(400).json({ message: "Missing Data" });
   }
   try {
@@ -85,7 +85,7 @@ exports.updatePost = async (req, res, next) => {
       return res.status(404).json({ message: "This post does not exist !" });
     }
     // Remplacement img si modification avec img
-    let imagePath = post.imageUrl;
+    let imageUrl = post.imageUrl;
 
     if (req.file) {
       const filename = post.imageUrl.split("/images/")[1];
@@ -96,10 +96,11 @@ exports.updatePost = async (req, res, next) => {
           console.log('This image is deleted')
         }
       });
-      imagePath = "http://localhost:3000/images/" + req.file.filename;
+      imageUrl = "http://localhost:8888/images/" + req.file.filename;
     }
+    console.log(imageUrl)
     // Mise à jour du post
-    await Post.update({ content: req.body.content, title: req.body.title, imageUrl: imagePath } , { where: { id: postId } });
+    await Post.update({ content: req.body.content, title: req.body.title, imageUrl: imageUrl } , { where: { id: postId } });
     return res.json({ message: "Post Updated" });
   } catch (err) {
     return res.status(500).json({ message: "Database Error", error: err });
