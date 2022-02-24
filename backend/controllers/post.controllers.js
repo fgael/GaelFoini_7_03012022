@@ -44,11 +44,14 @@ exports.getOnePost = async (req, res, next) => {
 /* Controleur création post */
 exports.createPost = async (req, res, next) => {
   const { user_id, title, content } = req.body;
-  const post = {
+  const post = req.file ?
+  {
     ...req.body,
     imageUrl: `${req.protocol}://${req.get("host")}/images/${
       req.file.filename
-    }`};
+    }`} : {
+    ...req.body,
+  }
   // Validation des données reçues
   if (!user_id || !title || !content) {
     return res.status(400).json({ message: "Missing Data" });
@@ -64,9 +67,7 @@ exports.createPost = async (req, res, next) => {
 
 /* Controleur modification post */
 exports.updatePost = async (req, res, next) => {
-  // Editer a l'implementation des images
-  let postId = parseInt(req.params.id);
-
+  let postId = req.params.id;
   // Vérification si le champ id est présent et cohérent
   if (!postId) {
     return res.status(400).json({ message: "Missing parameter" });
@@ -78,13 +79,27 @@ exports.updatePost = async (req, res, next) => {
     if (req.tokenId !== post.user_id) {
       return res.status(401).json({ message: "Unauthorized" });
     }
+
     // Vérifier si le post existe
     if (post === null) {
       return res.status(404).json({ message: "This post does not exist !" });
     }
+    // Remplacement img si modification avec img
+    let imagePath = post.imageUrl;
 
+    if (req.file) {
+      const filename = post.imageUrl.split("/images/")[1];
+      fs.unlink(`images/${filename}`, (err) => {
+        if (err) {
+          console.log(err)
+        } else {
+          console.log('This image is deleted')
+        }
+      });
+      imagePath = "http://localhost:3000/images/" + req.file.filename;
+    }
     // Mise à jour du post
-    await Post.update(req.body, { where: { id: postId } });
+    await Post.update({ content: req.body.content, title: req.body.title, imageUrl: imagePath } , { where: { id: postId } });
     return res.json({ message: "Post Updated" });
   } catch (err) {
     return res.status(500).json({ message: "Database Error", error: err });
@@ -100,7 +115,7 @@ exports.deletePost = (req, res, next) => {
     return res.status(400).json({ message: "Missing parameter" });
   }
   Post.findOne({ where: { id: postId }, raw: true }).then((post) => {
-    if (req.tokenId === post.user_id || req.role !== 1) {
+    if (req.tokenId === post.user_id || req.role === 1) {
       // Suppression du post
       Post.destroy({ where: { id: postId }, force: true })
         .then(() => res.status(204).json({}))
@@ -202,7 +217,7 @@ exports.deleteComment = (req, res, next) => {
     return res.status(400).json({ message: "Missing parameter" });
   }
   Comment.findOne({ where: { id: commentId }, raw: true }).then((comment) => {
-    if (req.tokenId === comment.user_id || req.role !== 1) {
+    if (req.tokenId === comment.user_id || req.role === 1) {
       // Suppression du comment
       Comment.destroy({ where: { id: commentId }, force: true })
         .then(() => res.status(204).json({}))

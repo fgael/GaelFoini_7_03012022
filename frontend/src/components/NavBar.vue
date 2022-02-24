@@ -43,8 +43,7 @@ export default {
     flex-grow: 2;
     gap: 1rem;
     color: white;
-    font-size: 20px;
-    padding: 20px;
+    padding: 1rem;
     background: #515ad1;
     border-radius: 16px 0 0 16px;
     img {

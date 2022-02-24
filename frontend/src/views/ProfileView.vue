@@ -1,6 +1,8 @@
 <template>
 <div class="container" v-if="currentUser">
-  <img src="../assets/pfp.png" alt="pfp">
+  <div class="faIcon">
+  <fa icon="user" />
+  </div>
   <div >
     Nom : {{currentUser.nom}}
   </div>
@@ -58,10 +60,10 @@ export default {
       this.$router.push('/login');
     },
   },
-    mounted: function () {
-    if (!this.$store.state.loggedIn){
-      this.$router.push('/login');
-      return;
+  mounted: function () {
+  if (!this.$store.state.loggedIn){
+    this.$router.push('/login');
+    return;
     }
   }
 }
@@ -70,10 +72,15 @@ export default {
 
 <style lang="scss" scoped>
 
-img {
-  border-radius: 50%;
-  height: 4rem;
+.faIcon {
+
+  font-size: 3rem;
   margin-bottom: 2rem;
+  color: #515ad1;
+  border-radius: 50%;
+  background: #f1f1f1;
+  width: 4.5rem;
+  text-align: center;
 }
 
 button {

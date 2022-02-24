@@ -14,6 +14,10 @@ class userServices {
   deleteUserById(id) {
     return instance.delete(API_URL + id);
   }
+
+  updateRole(id, content) {
+    return instance.patch(API_URL + "role/" + id, content)
+  }
   
   // trashUserById(id) {
   //   return instance.delete(API_URL + "trash/" + id);

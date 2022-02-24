@@ -7,7 +7,7 @@
           </div>
           <div class="postContent">
             <label for="postContent">Contenu</label>
-            <input v-model="post.content" class="form-input" id="postContent" type="text" />
+            <textarea v-model="post.content" class="form-input" id="postContent" />
           </div>
           <div class="postImg">
             <label for="postImg">Image</label>
@@ -33,18 +33,22 @@ export default {
     return {
         post: {},
         postImg:'',
+        control: 0,
     }
   },
   methods: {
     createPost() {
       let formData = new FormData()
-      formData.append("file", this.postImg, this.postImg.name)
       formData.append("user_id", this.$store.state.userInfos.id)
       formData.append("title", this.post.title)
       formData.append("content", this.post.content)
+      if (this.control == 1) {
+        formData.append("file", this.postImg, this.postImg.name)
+      }
       postServices.createPost(formData)
       .then((res) => {
         console.log(res)
+        this.control = 0;
         this.$router.push("/")
       })
       .catch ((error) => {
@@ -52,6 +56,7 @@ export default {
       })
     },
     imgUpload(e) {
+    this.control = 1;
     const file = e.target.files[0];
     this.postImg = file;
     }
@@ -67,6 +72,32 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.postTitle {
+  display: flex;
+  flex-direction: column;
+  input {
+    margin: 2rem 0;
+  }
+}
+
+.postContent {
+  display: flex;
+  flex-direction: column;
+  textarea {
+    margin: 2rem 0;
+    height: 20rem;
+    padding: 0.5rem;
+    resize: none;
+  }
+}
+
+.postImg {
+  display: flex;
+  flex-direction: column;
+  input {
+      margin: 1rem 0;
+  }
+}
 
 img {
   border-radius: 50%;

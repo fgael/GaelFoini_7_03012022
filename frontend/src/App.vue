@@ -48,17 +48,12 @@ body {
   align-items: center;
   justify-content: center;
 }
+
 .container {
-    color: black;
-    font-size: 20px;
     flex-grow: 2;
-    width: 70vh;
-    border-radius: 0 16px 16px 0;
-    padding: 32px;
+    border-radius: 0 1rem 1rem 0;
+    padding: 2rem;
     background: white;
-    p {
-    text-align: left;
-    }
 }
 
 li {

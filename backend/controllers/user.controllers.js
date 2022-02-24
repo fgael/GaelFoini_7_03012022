@@ -202,6 +202,29 @@ exports.updateAccount = async (req, res, next) => {
   }
 };
 
+/* Controleur modification role utilisateur */
+exports.updateRole = async (req, res, next) => {
+  let userId = parseInt(req.params.id);
+  // Vérification si le champ id est présent et cohérent
+  if (!userId) {
+    return res.json(400).json({ message: "Missing Parameter" });
+  }
+
+  try {
+    // Recherche de l'utilisateur et vérification
+    let user = await User.findOne({ where: { id: userId }, raw: true });
+    // Vérifier si l'utilisateur existe
+    if (user === null) {
+      return res.status(404).json({ message: "This user does not exist !" });
+    }
+    // Mise à jour de l'utilisateur
+    await User.update(req.body, { where: { id: userId } });
+    return res.json({ message: "User role updated" });
+  } catch (err) {
+    return res.status(500).json({ message: "Database Error", error: err });
+  }
+}
+
 /* Controleur suppression utilisateur de la BDD */
 exports.deleteAccount = (req, res, next) => {
   let userId = parseInt(req.params.id);

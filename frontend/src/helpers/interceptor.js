@@ -17,26 +17,9 @@ const token = JSON.parse(sessionStorage.getItem('userTokens'));
   return config;
 });
 
-// let inactivityTime = []
 instance.interceptors.response.use(
   (response) => {
     return response;
-    // // Suppression tokens si pas de requete pendant duree defini (sup a access_token)
-    // inactivityTime.push((Math.round(+new Date() / 1000)))
-    // const token = JSON.parse(sessionStorage.getItem('userTokens'));
-    // if (!token){
-    //   return response;
-    // } else {
-    //   // duree avant suppression (- 2700 = 45min)
-    //     if (inactivityTime[inactivityTime.length - 2] > (Math.round(+new Date() / 1000) - 2700)) {
-    //       return response;
-    //   } else {
-    //     alert("Veuillez vous reconnecter - Temps d'inactivité supérieur à 45 minutes")
-    //     sessionStorage.removeItem('userTokens');
-    //     localStorage.removeItem('userInfos');
-    //     location.reload();
-    //   }
-    // }
   },
   // Expiration accessToken (erreur 401) renouvellement avec refreshToken
   async function (error) {

@@ -16,8 +16,10 @@
     <div class="role">
       Administrateur : {{user.role}}
     </div>
-    <button @click="deleteUserById()">Supprimer compte</button>
-    <button @click="modifyRole()">Modifier rôle</button>
+    <div class="button">
+      <button v-if="user.id != currentUser.id" @click="deleteUserById(user.id)">Supprimer compte</button>
+      <button v-if="user.id != currentUser.id" @click="updateRole(user.id, user.role)">Modifier rôle</button>
+    </div>
   </div>
 </div>
 </template>
@@ -31,6 +33,7 @@ export default {
   data() {
     return {
       users: [],
+      newRole: false,
     }
   },
   computed: {
@@ -48,24 +51,43 @@ export default {
       .catch ((error) => {
       console.log(error)
       })
-      }
     },
     deleteUserById(id) {
       userServices.deleteUserById(id)
       .then((res) => {
         console.log(res)
+        this.getAllUsers()
       })
       .catch ((error) => {
         console.log(error)
       })
     },
-    beforeMount() {
-      this.getAllUsers()
+    updateRole(id, role) {
+      if (role == 1) {
+        this.newRole = false
+      } else if ( role == 0) {
+        this.newRole = true
+      } 
+      let content = {
+        role: this.newRole
+      }
+      userServices.updateRole(id, content)
+      .then((res) => {
+        console.log(res)
+        this.getAllUsers()
+      })
+      .catch ((error) => {
+        console.log(error)
+      })
     },
-    mounted() {
-    if (!this.$store.state.loggedIn){
-      this.$router.push('/login');
-      return;
+  },
+  beforeMount() {
+    this.getAllUsers()
+  },
+  mounted() {
+  if (!this.$store.state.loggedIn){
+    this.$router.push('/login');
+    return;
     }
   }
 }
@@ -79,6 +101,14 @@ export default {
   border-radius: 1rem;
   padding: 0.5rem;
   margin: 1rem 0;
+}
+
+.button {
+  display: flex;
+  flex-direction: row;
+  button {
+    margin: 1rem 1.5rem 0 0;
+  }
 }
 
 </style>
