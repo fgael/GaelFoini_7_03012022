@@ -27,18 +27,21 @@
               <div class="iconBtn">
                 <fa icon="feather"/>
               </div>
-              <p>Editer le post</p>
+              <p v-if="$screen.width >= 1024" >Editer le post</p>
             </button>
             <button v-if="currentUser.id == post.user_id || currentUser.role == true" @click="deletePost(post.id)">
               <div class="iconBtn">
                 <fa icon="trash"/>
               </div>
-              <p>Supprimer le post</p>
+              <p v-if="$screen.width >= 1024">Supprimer le post</p>
             </button>
           </div>
         </div>
       </div>
     </div>
+    <!-- <p>Page width is {{ $screen.width }} px</p>
+    <p>Page height is {{ $screen.height }} px</p>
+    <p>Current breakpoint is {{ $screen.breakpoint }} px</p> -->
   </div>
 </template>
 
@@ -105,6 +108,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.containerMobile {
+  padding: 0.5rem;
+}
 
 .currentUser {
   display: flex;
@@ -175,6 +182,8 @@ export default {
             word-break: unset;
           }
           .iconBtn {
+            display: flex;
+            text-align: center;
             margin-right: 0.5rem;
             font-size: 0.9rem;
           }

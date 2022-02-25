@@ -96,7 +96,7 @@ exports.updatePost = async (req, res, next) => {
           console.log('This image is deleted')
         }
       });
-      imageUrl = "http://localhost:8888/images/" + req.file.filename;
+      imageUrl = `${req.protocol}://${req.get("host")}/images/${req.file.filename}` ;
     }
     console.log(imageUrl)
     // Mise à jour du post

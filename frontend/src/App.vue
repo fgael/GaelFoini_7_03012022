@@ -1,8 +1,13 @@
 <template>
-  <main>
+  <main v-if="$screen.width >= 1200">
     <NavBar v-if="currentUser"/>
     <router-view/>
   </main>
+  <main v-else class="mainMobile">
+    <NavBar v-if="currentUser"/>
+    <router-view/>
+  </main>
+  
 </template>
 
 <script>
@@ -40,6 +45,10 @@ main{
   min-height: 100vh;
   width: 70%;
   max-width: 60rem;
+}
+
+.mainMobile {
+  width: 100%;
 }
 
 #app {
