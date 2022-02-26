@@ -2,7 +2,7 @@ import { createStore } from "vuex";
 import { instance } from "@/helpers/interceptor";
 
 let loggedIn = false;
-let user = sessionStorage.getItem("userTokens");
+let user = localStorage.getItem("userTokens");
 let userInfos = localStorage.getItem("userInfos");
 if (!user) {
   user = JSON.stringify({});
@@ -26,7 +26,7 @@ const store = createStore({
       state.status = status;
     },
     logUser: function (state, user) {
-      sessionStorage.setItem("userTokens", JSON.stringify(user.userTokens));
+      localStorage.setItem("userTokens", JSON.stringify(user.userTokens));
       localStorage.setItem("userInfos", JSON.stringify(user.userInfos));
       state.user = user.userTokens;
       state.userInfos = user.userInfos;
@@ -36,15 +36,15 @@ const store = createStore({
       state.user = {};
       state.userInfos = {};
       state.loggedIn = false;
-      sessionStorage.removeItem("userTokens");
+      localStorage.removeItem("userTokens");
       localStorage.removeItem("userInfos");
     },
     userUpdate: function (state, user) {
-      sessionStorage.removeItem("userTokens");
+      localStorage.removeItem("userTokens");
       localStorage.removeItem("userInfos");
       state.user = user.userTokens;
       state.userInfos = user.userInfos;
-      sessionStorage.setItem("userTokens", JSON.stringify(user.userTokens));
+      localStorage.setItem("userTokens", JSON.stringify(user.userTokens));
       localStorage.setItem("userInfos", JSON.stringify(user.userInfos));
     }
   },

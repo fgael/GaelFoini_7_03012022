@@ -43,7 +43,7 @@ exports.getOnePost = async (req, res, next) => {
 
 /* Controleur création post */
 exports.createPost = async (req, res, next) => {
-  const { user_id, title, content, author } = req.body;
+  const { user_id, title, content, username } = req.body;
   const post = req.file ?
   {
     ...req.body,
@@ -53,7 +53,7 @@ exports.createPost = async (req, res, next) => {
     ...req.body,
   }
   // Validation des données reçues
-  if (!user_id || !title || !content || !author) {
+  if (!user_id || !title || !content || !username) {
     return res.status(400).json({ message: "Missing Data" });
   }
   try {

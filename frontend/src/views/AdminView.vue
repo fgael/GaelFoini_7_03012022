@@ -18,19 +18,19 @@
           <p>Pseudo : {{user.pseudo}}</p> 
         </div>
         <div class="email">
-          <p>Pseudo : {{user.email}}</p> 
+          <p>E-mail : {{user.email}}</p> 
         </div>
         <div class="role">
           <p>Administrateur : {{user.role}}</p>
         </div>
         <div class="button">
-          <button v-if="user.id != currentUser.id" @click="updateRole(user.id, user.role)">
+          <button type="button" v-if="user.id != currentUser.id" @click="updateRole(user.id, user.role)">
             <div class="iconBtn">
               <fa icon="user-pen"/>
             </div>
             <p>Modifier rôle</p>
           </button>
-          <button v-if="user.id != currentUser.id" @click="deleteUserById(user.id)">
+          <button type="button" v-if="user.id != currentUser.id" @click="deleteUserById(user.id)">
             <div class="iconBtn">
               <fa icon="trash"/>
             </div>
@@ -105,7 +105,6 @@ export default {
   mounted() {
   if (!this.$store.state.loggedIn){
     this.$router.push('/login');
-    return;
     }
   }
 }
@@ -119,7 +118,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 2rem;
+    margin: 0.3rem 0 2rem 0 ;
     h1 {
       font-size: 1.2rem;
     }

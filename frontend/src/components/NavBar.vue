@@ -8,7 +8,7 @@
         <div class="admin" v-if="currentUser.role == 1">
           <router-link to="/admin" class="navLink">
              <div class="iconNavBar">
-              <fa icon="hammer"/>
+              <fa class="icon" icon="hammer"/>
               <p v-if="$screen.width >= 1200">Page admin</p>
             </div>
           </router-link>
@@ -17,7 +17,7 @@
       <li>
         <router-link to="/" class="navLink">
           <div class="iconNavBar">
-            <fa icon="home"/>
+            <fa class="icon" icon="home"/>
             <p v-if="$screen.width >= 1200">Accueil</p>
           </div>
         </router-link>
@@ -25,7 +25,7 @@
       <li>
         <router-link to="/post" class="navLink">
           <div class="iconNavBar">
-            <fa icon="feather"/>
+            <fa class="icon" icon="feather"/>
             <p v-if="$screen.width >= 1200">Nouveau post</p>
           </div>
         </router-link>
@@ -33,14 +33,14 @@
       <li>
         <router-link to="/profile" class="navLink">
           <div class="iconNavBar">
-            <fa icon="user"/>
+            <fa class="icon" icon="user"/>
             <p v-if="$screen.width >= 1200">Profil</p>
           </div>
         </router-link>
       </li>
       <li @click="logout()" class="logout">
         <div class="iconNavBar">
-          <fa icon="power-off"/>
+          <fa class="icon" icon="power-off"/>
           <p v-if="$screen.width >= 1200">Déconnexion</p>
         </div>
       </li>

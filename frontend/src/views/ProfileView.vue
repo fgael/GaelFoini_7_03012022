@@ -21,13 +21,13 @@
     </div>
     <modale :revele="revele" :toggleModale="toggleModale"></modale>
     <div class="button">
-      <button @click="toggleModale">
+      <button type="button" @click="toggleModale">
         <div class="iconBtn">
           <fa icon="feather"/>
         </div>
         <p>Editer votre profil</p>
       </button>
-      <button @click="deleteUserById(currentUser.id)">
+      <button type="button"  @click="deleteUserById(currentUser.id)">
         <div class="iconBtn">
           <fa icon="trash"/>
         </div>
@@ -79,7 +79,6 @@ export default {
   mounted: function () {
   if (!this.$store.state.loggedIn){
     this.$router.push('/login');
-    return;
     }
   }
 }
@@ -92,6 +91,7 @@ export default {
   .containerIcon {
     display: flex;
     justify-content: center;
+    margin-top: 0.3rem;
   }
   .icon {
     font-size: 1.5rem;
@@ -144,6 +144,8 @@ export default {
       font-size: 0.9rem;
     }
   }
+
+
 }
 
 

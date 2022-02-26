@@ -22,6 +22,10 @@ class postServices {
   deletePost(id) {
     return instance.delete(API_URL + id);
   }
+
+  createComment(content) {
+    return instance.put(API_URL + "comment/", content)
+  }
   
   // trashUserById(id) {
   //   return instance.delete(API_URL + "trash/" + id);

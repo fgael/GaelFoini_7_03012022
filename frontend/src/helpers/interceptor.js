@@ -10,7 +10,7 @@ const instanceRefresh = axios.create({
 
 // Mise en place tokens pour requete
 instance.interceptors.request.use(async config => {
-const token = JSON.parse(sessionStorage.getItem('userTokens'));
+const token = JSON.parse(localStorage.getItem('userTokens'));
   if (token) {
     config.headers.Authorization = token.access_token;
   }
@@ -36,12 +36,12 @@ instance.interceptors.response.use(
 async function refreshToken() {
   return new Promise((resolve, reject) => {
     try {
-      const refresh_token = JSON.parse(sessionStorage.getItem('userTokens')).refresh_token;
+      const refresh_token = JSON.parse(localStorage.getItem('userTokens')).refresh_token;
       instanceRefresh.post("users/refresh", { refresh_token })
       .then(async (res) => {
-        const refresh = JSON.parse(sessionStorage.getItem('userTokens'))
+        const refresh = JSON.parse(localStorage.getItem('userTokens'))
         refresh.access_token = res.data.token;
-        sessionStorage.setItem('userTokens', JSON.stringify(refresh));
+        localStorage.setItem('userTokens', JSON.stringify(refresh));
         return resolve(res);
       })
       .catch((err) => {

@@ -37,11 +37,11 @@
         Adresse e-mail déjà utilisée
       </div>
       <div class="formGroup">
-        <button @click="login()" class="button" :class="{'button--disabled' : !validatedFields}" v-if="type == 'login'">
+        <button type="button" @click="login()" class="button" :class="{'button--disabled' : !validatedFields}" v-if="type == 'login'">
           <span v-if="status == 'loading'">Connexion en cours ... </span>
           <span v-else>Connexion</span>
         </button>
-        <button @click="createAccount()"  class="button" :class="{'button--disabled' : !validatedFields}" v-else>
+        <button type="button" @click="createAccount()"  class="button" :class="{'button--disabled' : !validatedFields}" v-else>
           <span v-if="status == 'loading'">Création en cours ... </span>
           <span v-else>Créer mon compte</span>
         </button>
@@ -145,7 +145,7 @@ export default {
         display: flex;
         justify-content: center;
         height: 3.5rem;
-        margin: 3.5rem 0;
+        margin: 2rem 0 3rem 0;
       }
       .containerTitle {
         text-align: center;

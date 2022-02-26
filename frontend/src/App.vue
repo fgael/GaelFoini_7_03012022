@@ -1,13 +1,9 @@
 <template>
-  <main v-if="$screen.width >= 1200">
+  <main>
     <NavBar v-if="currentUser"/>
     <router-view/>
   </main>
-  <main v-else class="mainMobile">
-    <NavBar v-if="currentUser"/>
-    <router-view/>
-  </main>
-  
+
 </template>
 
 <script>
@@ -47,9 +43,7 @@ main{
   max-width: 60rem;
 }
 
-.mainMobile {
-  width: 100%;
-}
+
 
 #app {
   width: 100%;
@@ -62,7 +56,8 @@ main{
 .navcontainer {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+
+  gap: 2rem;
   max-width: 12rem;
   color: white;
   padding: 1rem;
@@ -75,7 +70,7 @@ main{
   img {
     margin-top: 1.1rem;
     max-height: 1.6rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
   }
   .navLink {
     text-decoration: none;
@@ -87,6 +82,14 @@ main{
     font-size: 1.1rem;
     p {
       margin-left: 0.5rem;
+    }
+    .icon { 
+      transition: all 200ms ease-in;
+      transform: scale(1);   
+      &:hover {
+        transition: all 200ms ease-in;
+        transform: scale(1.5);
+      }
     }
   }
   .logout {
@@ -100,9 +103,20 @@ main{
   scrollbar-width: thin;
   flex-grow: 2;
   border-radius: 0 1rem 1rem 0;
-  padding: 2rem;
+  padding: 1.8rem;
   background: white;
 }
+
+@media screen and (max-width: 1000px){
+main {
+  width: 100%;
+  }
+
+.navcontainer {
+  align-items: center;
+}
+}
+
 
 
 

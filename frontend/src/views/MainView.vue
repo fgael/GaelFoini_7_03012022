@@ -8,33 +8,55 @@
     </div>
     <div class="postContainer">
       <div v-for="post in posts.slice().reverse()" :key="post.id" class="posts">
-        <div class="post-title">
+        <div class="postTitle">
           <h2>{{post.title}}</h2>
           <div class="postDetails">
           <p>Crée le
           {{ post.createdAt.split("T")[0].split("-").reverse().join("/") + ", à " + post.createdAt.split("T")[1].split(":").slice(0,-1).join(":") }}
           </p>
-          <p>Auteur : {{post.author}} </p>
+          <p>Auteur : {{post.username}} </p>
           </div>
         </div>
         <div v-if="post.imageUrl" class="post-img">
             <img :src="post.imageUrl" alt="image du post">
         </div>
-        <div class="post-content">
+        <div class="postContent">
           <p>{{post.content}}</p>
           <div class="button">
-              <button v-if="currentUser.id == post.user_id" @click="editPost(post.id)">
+            <button type="button" v-if="currentUser.id == post.user_id" @click="editPost(post.id)">
               <div class="iconBtn">
                 <fa icon="feather"/>
               </div>
-              <p v-if="$screen.width >= 1024" >Editer le post</p>
+              <p v-if="$screen.width >= 1024">Editer le post</p>
             </button>
-            <button v-if="currentUser.id == post.user_id || currentUser.role == true" @click="deletePost(post.id)">
+            <button type="button" @click="newComment = 1, currentPost = post.id">
+              <div class="iconBtn">
+                <fa icon="comment"/>
+              </div>
+              <p v-if="$screen.width >= 1024">Nouveau commentaire</p>
+            </button>
+            <button type="button" v-if="currentUser.id == post.user_id || currentUser.role == true" @click="deletePost(post.id)">
               <div class="iconBtn">
                 <fa icon="trash"/>
               </div>
               <p v-if="$screen.width >= 1024">Supprimer le post</p>
             </button>
+          </div>
+          <div class="commentComment">
+            <div v-if="newComment == 1 && post.id == currentPost" class="textArea" @keyup.enter="createComment(post.id)">
+              <textarea v-model="content" name="newComment"></textarea>
+            </div>
+            <div v-for="comment in post.Comments.slice(0, commentsLimit)" :key="comment.id" class="comments">
+              <p> {{comment.username}}</p>
+              <p> {{comment.createdAt.split("T")[0].split("-").reverse().join("/") + ", à " + comment.createdAt.split("T")[1].split(":").slice(0,-1).join(":")}}</p>
+              <p> {{comment.content}}</p>
+            </div>
+            <button type="button" v-if="post.Comments.length > 3" @click="showMoreComments(post.Comments.length)">
+                <p>Voir plus de commentaires</p>  
+            </button>
+            <button type="button" v-if="commentsLimit == post.Comments.length" @click="showLessComments()">
+              <p>Réduire les commentaires</p>
+            </button> 
           </div>
         </div>
       </div>
@@ -55,6 +77,10 @@ export default {
     return {
       posts: [],
       revele: false,
+      content: '',
+      newComment: 0,
+      currentPost: 0,
+      commentsLimit: 3,
     }
   },
   computed: {
@@ -63,34 +89,56 @@ export default {
     }
   },
   methods: {
+    getAllPosts() {
+      postServices.getAllPosts()
+      .then((res) => {
+      console.log(res)
+      this.posts = res.data.data
+    })
+    .catch ((error) => {
+      console.log(error)
+    })},
+    editPost(id){
+      this.$router.push({ path: "post", query: { edit: 1, id: id }})
+    },
     deletePost(id){
       postServices.deletePost(id)
       .then((res) => {
         console.log(res)
-        postServices.getAllPosts()
-          .then((res) => {
-            console.log(res)
-            this.posts = res.data.data
-          })
-          .catch ((error) => {
-            console.log(error)
-          })
+        this.getAllPosts()
       })
       .catch ((error) => {
         console.log(error)
       })
     },
-    toggleModale(){
-      this.revele = !this.revele;
+    createComment(id) {
+      let content = {
+        username: this.$store.state.userInfos.pseudo,
+        user_id: this.$store.state.userInfos.id,
+        content: this.content,
+        PostId: id,
+      }
+      postServices.createComment(content)
+      .then((res) => {
+        console.log(res)
+        this.newComment = 0;
+        this.content = '';
+        this.getAllPosts()
+      })
+      .catch ((error) => {
+        console.log(error)
+      })
     },
-    editPost(id){
-      this.$router.push({ path: "post", query: { edit: 1, id: id }})
+    showMoreComments(allComments) {
+      this.commentsLimit = allComments;
+    },
+    showLessComments() {
+      this.commentsLimit = 3;
     }
   },
   mounted: function () {
     if (!this.$store.state.loggedIn){
       this.$router.push('/login');
-      return;
     }
     postServices.getAllPosts()
     .then((res) => {
@@ -108,10 +156,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-.containerMobile {
-  padding: 0.5rem;
-}
 
 .currentUser {
   display: flex;
@@ -137,7 +181,7 @@ export default {
     box-shadow: 1px 9px 29px 6px rgba(145,145,145,0.74);
     -webkit-box-shadow: 1px 9px 29px 6px rgba(145,145,145,0.50);
     -moz-box-shadow: 1px 9px 29px 6px rgba(145,145,145,0.50);
-    .post-title {
+    .postTitle {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -156,17 +200,18 @@ export default {
         gap: 0.5rem;
       }
     }
-    .post-content {
+    .postContent {
       background: #f1f1f1;
       border-radius: 0 0 1rem 1rem;
       padding: 1.5rem 1rem 1rem 1rem;
       p {
         font-size: 1.1rem;
         word-break: break-all;
+        margin-left: 0.5rem;
       }
       .button {
         display: flex;
-        gap: 1.5rem;
+        gap: 1rem;
         margin-top: 1rem;
         button {
           display: flex;
@@ -184,7 +229,6 @@ export default {
           .iconBtn {
             display: flex;
             text-align: center;
-            margin-right: 0.5rem;
             font-size: 0.9rem;
           }
           &:hover{

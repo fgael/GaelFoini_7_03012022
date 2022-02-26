@@ -13,7 +13,7 @@
         <label for="postImg">Image</label>
         <input class="form-input" id="postImg" type="file" @change="imgUpload" />
       </div>
-      <button @click="createPost()">
+      <button type="button" @click="createPost()">
         <p>Valider</p>
       </button>
     </form>
@@ -47,7 +47,7 @@ export default {
           formData.append("user_id", this.$store.state.userInfos.id)
           formData.append("title", this.post.title)
           formData.append("content", this.post.content)
-          formData.append("author", this.$store.state.userInfos.pseudo)
+          formData.append("username", this.$store.state.userInfos.pseudo)
           if (this.control == 1) {
             formData.append("file", this.postImg, this.postImg.name)
           }
@@ -65,7 +65,7 @@ export default {
           formData.append("user_id", this.$store.state.userInfos.id)
           formData.append("title", this.post.title)
           formData.append("content", this.post.content)
-          formData.append("author", this.$store.state.userInfos.pseudo)
+          formData.append("username", this.$store.state.userInfos.pseudo)
         if (this.control == 1) {
           formData.append("file", this.postImg, this.postImg.name)
         }
@@ -89,7 +89,6 @@ export default {
   mounted: function () {
     if (!this.$store.state.loggedIn){
     this.$router.push('/login');
-      return;
     }
   }
 }
@@ -103,6 +102,7 @@ export default {
     .postTitle {
       display: flex;
       flex-direction: column;
+      margin-top: 0.5rem;
       label {
         font-size: 1.1rem;
       }
