@@ -18,7 +18,7 @@
           </div>
         </div>
         <div v-if="post.imageUrl" class="post-img">
-            <img :src="post.imageUrl" alt="image du post">
+          <img :src="post.imageUrl" alt="image du post">
         </div>
         <div class="postContent">
           <p>{{post.content}}</p>
@@ -29,7 +29,7 @@
               </div>
               <p v-if="$screen.width >= 1024">Editer le post</p>
             </button>
-            <button type="button" @click="newComment = 1, currentPost = post.id">
+            <button type="button" @click="newComment = 1, disableTextArea = 1, currentPost = post.id">
               <div class="iconBtn">
                 <fa icon="comment"/>
               </div>
@@ -42,25 +42,33 @@
               <p v-if="$screen.width >= 1024">Supprimer le post</p>
             </button>
           </div>
-          <div class="commentComment">
-            <div v-if="newComment == 1 && post.id == currentPost" class="textArea" @keyup.enter="createComment(post.id)">
+          <div  class="commentContent">
+            <div v-if="newComment == 1 && post.id == currentPost && disableTextArea == 1" class="textArea" @keyup.enter="createComment(post.id)" @keyup.escape="disableTextArea = 0">
               <textarea v-model="content" name="newComment"></textarea>
             </div>
             <div v-for="comment in post.Comments.slice(0, commentsLimit)" :key="comment.id" class="comments">
-              <p> {{comment.username}}</p>
-              <p> {{comment.createdAt.split("T")[0].split("-").reverse().join("/") + ", à " + comment.createdAt.split("T")[1].split(":").slice(0,-1).join(":")}}</p>
+              <div class="commentTitle">
+                <p>Auteur : {{comment.username}}</p>
+                <p>Crée le : {{comment.createdAt.split("T")[0].split("-").reverse().join("/") + ", à " + comment.createdAt.split("T")[1].split(":").slice(0,-1).join(":")}}</p>
+                <button type="button" @click="deleteComment(comment.id)">
+                  <div class="iconBtn">
+                    <fa icon="trash"/>
+                  </div>
+                </button>
+              </div>
               <p> {{comment.content}}</p>
             </div>
-            <button type="button" v-if="post.Comments.length > 3" @click="showMoreComments(post.Comments.length)">
-                <p>Voir plus de commentaires</p>  
+            <button type="button" v-if="post.Comments.length > commentsLimit" @click="showMoreComments(post.Comments.length)">
+                <p>Afficher plus de commentaires</p>  
             </button>
-            <button type="button" v-if="commentsLimit == post.Comments.length" @click="showLessComments()">
+            <button type="button" v-if="post.Comments.length > 3 && showComments == 1" @click="showLessComments()">
               <p>Réduire les commentaires</p>
             </button> 
           </div>
         </div>
       </div>
     </div>
+    <!-- Display screen size indicator -->
     <!-- <p>Page width is {{ $screen.width }} px</p>
     <p>Page height is {{ $screen.height }} px</p>
     <p>Current breakpoint is {{ $screen.breakpoint }} px</p> -->
@@ -80,7 +88,9 @@ export default {
       content: '',
       newComment: 0,
       currentPost: 0,
+      disableTextArea: 0,
       commentsLimit: 3,
+      showComments: 0,
     }
   },
   computed: {
@@ -129,11 +139,23 @@ export default {
         console.log(error)
       })
     },
+    deleteComment(id) {
+      postServices.deleteComment(id)
+      .then((res) => {
+        console.log(res)
+        this.getAllPosts()
+      })
+      .catch ((error) => {
+        console.log(error)
+      })
+    },
     showMoreComments(allComments) {
       this.commentsLimit = allComments;
+      this.showComments = 1;
     },
     showLessComments() {
       this.commentsLimit = 3;
+      this.showComments = 0;
     }
   },
   mounted: function () {
@@ -201,13 +223,11 @@ export default {
       }
     }
     .postContent {
-      background: #f1f1f1;
       border-radius: 0 0 1rem 1rem;
       padding: 1.5rem 1rem 1rem 1rem;
       p {
         font-size: 1.1rem;
         word-break: break-all;
-        margin-left: 0.5rem;
       }
       .button {
         display: flex;
@@ -217,12 +237,13 @@ export default {
           display: flex;
           justify-content: center;
           align-items: center;
-          background: #1976d2 ;
+          background: #1976d2;
           color: white;
           border-radius: 8px;
           border: none;
           padding: 0.3rem 0.7rem;
           transition: 0.4s background-color;
+          margin-bottom: 1rem;
           p {
             word-break: unset;
           }
@@ -234,6 +255,68 @@ export default {
           &:hover{
             cursor: pointer;
             background: #3da9fc;
+          }
+        }
+      }
+      .commentContent {
+        background: #f5f5f5;
+        border-radius: 1rem;
+        padding: 1rem;
+        textarea {
+          margin: 1rem 0;
+          resize: none;
+          width: 100%;
+        }
+        .comments {
+          p {
+          border-bottom: 1px solid #9D9D9D;
+          padding-bottom: 0.2rem;
+          }   
+          .commentTitle {
+            display: flex;
+            flex-grow: 1;
+            align-items: center;
+            p {
+              display: flex;
+              flex-grow: 1;
+              margin: 0 0.5rem 0.2rem 0;
+              font-size: 1rem;
+              border: none;
+            }
+          }
+          button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #1976d2;
+            color: white;
+            border-radius: 8px;
+            border: none;
+
+            transition: 0.4s background-color;
+            &:hover{
+            cursor: pointer;
+            background: #3da9fc;
+            }
+          }
+        }
+        button {
+          margin: 0.5rem 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background: #1976d2;
+          color: white;
+          border-radius: 8px;
+          border: none;
+          padding: 0.3rem 0.7rem;
+          transition: 0.4s background-color;
+          p {
+            font-size: 1rem;
+          }
+          &:hover{
+          cursor: pointer;
+          background: #3da9fc;
           }
         }
       }

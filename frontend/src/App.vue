@@ -56,12 +56,11 @@ main{
 .navcontainer {
   display: flex;
   flex-direction: column;
-
   gap: 2rem;
   max-width: 12rem;
   color: white;
   padding: 1rem;
-  background: #515ad1;
+  background: #1976d2;
   border-radius: 1rem 0 0 1rem;
   li {
     list-style: none;
@@ -107,13 +106,14 @@ main{
   background: white;
 }
 
-@media screen and (max-width: 1000px){
+@media screen and (max-width: 1024px){
 main {
   width: 100%;
   }
 
 .navcontainer {
   align-items: center;
+  border-radius: 0;
 }
 }
 

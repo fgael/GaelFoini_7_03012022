@@ -3,7 +3,7 @@
     <form class="postForm">
       <div class="postTitle">
         <label for="postTitle">Titre</label>
-        <input v-model="post.title" class="form-input" id="postTitle" type="text"/>
+        <input v-model="post.title" class="form-input" id="postTitle" type="text" />
       </div>
       <div class="postContent">
         <label for="postContent">Contenu</label>
@@ -40,10 +40,14 @@ export default {
   },
   methods: {
     createPost() {
+      //Edit
       let edit = this.$route.query.edit
       let id = this.$route.query.id
       if (edit == 1){
-        let formData = new FormData()
+          if (!this.post.title){
+            this.post.title = `Post de : ${this.$store.state.userInfos.pseudo}`
+          }
+          let formData = new FormData()
           formData.append("user_id", this.$store.state.userInfos.id)
           formData.append("title", this.post.title)
           formData.append("content", this.post.content)
@@ -61,6 +65,7 @@ export default {
           console.log(error)
         })
       } else {
+        //Create
         let formData = new FormData()
           formData.append("user_id", this.$store.state.userInfos.id)
           formData.append("title", this.post.title)

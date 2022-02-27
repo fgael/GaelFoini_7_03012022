@@ -11,12 +11,12 @@ class postServices {
     return instance.get(API_URL + id);
   }
 
-  updatePost(id, content) {
-    return instance.patch(API_URL + id, content);
-  }
-
   createPost(content) {
     return instance.put(API_URL, content);
+  }
+
+  updatePost(id, content) {
+    return instance.patch(API_URL + id, content);
   }
 
   deletePost(id) {
@@ -25,6 +25,10 @@ class postServices {
 
   createComment(content) {
     return instance.put(API_URL + "comment/", content)
+  }
+
+  deleteComment(id) {
+    return instance.delete(API_URL + "comment/" + id)
   }
   
   // trashUserById(id) {
