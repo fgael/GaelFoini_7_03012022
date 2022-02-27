@@ -23,14 +23,14 @@
         <div class="role">
           <p>Administrateur : {{user.role}}</p>
         </div>
-        <div class="button">
-          <button type="button" v-if="user.id != currentUser.id" @click="updateRole(user.id, user.role)">
+        <div class="button" v-if="user.id != currentUser.id">
+          <button type="button"  @click="updateRole(user.id, user.role)">
             <div class="iconBtn">
               <fa icon="user-pen"/>
             </div>
             <p>Modifier rôle</p>
           </button>
-          <button type="button" v-if="user.id != currentUser.id" @click="deleteUserById(user.id)">
+          <button type="button"  @click="deleteUserById(user.id)">
             <div class="iconBtn">
               <fa icon="trash"/>
             </div>
@@ -131,6 +131,9 @@ export default {
     font-size: 1.1rem;
   }
   .user {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
     border-radius: 1rem;
     margin: 1rem 0;
     background: #f1f1f1;
@@ -142,21 +145,10 @@ export default {
     margin-top: 1rem;
     gap: 1rem;
     button {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: #1976d2 ;
-      color: white;
-      border-radius: 8px;
-      border: none;
       font-size: 1rem;
       padding: 0.3rem 0.7rem;
-      transition: 0.4s background-color;
-      &:hover{
-        cursor: pointer;
-        background: #3da9fc;
-      }
       p {
+       font-size: 1rem;
         margin: 0;
       }
       .iconBtn {

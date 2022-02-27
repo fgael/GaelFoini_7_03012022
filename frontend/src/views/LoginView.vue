@@ -211,5 +211,31 @@ export default {
   }
 }
 
+@media screen and (max-width: 1024px){
+  .container {
+    .containerLog {
+
+      height: 100%;
+      width: 100%;
+      border-radius: 0;
+      .logo {
+        margin-top: 30%;
+      }
+      img {
+        width: 20rem;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 500px){
+  .container {
+    .containerLog {
+      .logo {
+        margin-top: 10%;
+      }
+    }
+  }
+}
 
 </style>

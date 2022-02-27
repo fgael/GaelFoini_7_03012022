@@ -53,7 +53,7 @@ exports.createPost = async (req, res, next) => {
     ...req.body,
   }
   // Validation des données reçues
-  if (!user_id || !title || !content || !username) {
+  if (!user_id || !username) {
     return res.status(400).json({ message: "Missing Data" });
   }
   try {

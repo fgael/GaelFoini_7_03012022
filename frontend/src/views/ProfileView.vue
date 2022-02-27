@@ -122,20 +122,8 @@ export default {
   button {
     margin: 1rem 0;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #1976d2 ;
-    color: white;
-    border-radius: 8px;
-    border: none;
     font-size: 1rem;
     padding: 0.3rem 0.7rem;
-    transition: 0.4s background-color;
-    font-size: 1.1rem;
-    &:hover{
-      cursor: pointer;
-      background: #3da9fc;
-    }
     p {
       margin: 0;
     }

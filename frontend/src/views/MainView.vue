@@ -14,56 +14,65 @@
           <p>Crée le
           {{ post.createdAt.split("T")[0].split("-").reverse().join("/") + ", à " + post.createdAt.split("T")[1].split(":").slice(0,-1).join(":") }}
           </p>
-          <p>Auteur : {{post.username}} </p>
+          <p>Auteur - {{post.username}} </p>
+          </div>
+          <div class="postTitleButton">
+            <button type="button" class="postTitle__button" v-if="currentUser.id == post.user_id" @click="editPost(post.id)">
+              <div class="iconBtnTitle">
+                <fa icon="feather"/>
+              </div>
+              <p v-if="$screen.width >= 768">Editer le post</p>
+            </button>
+            <button type="button" class="postTitle__button" v-if="currentUser.id == post.user_id || currentUser.role == true" @click="deletePost(post.id)">
+              <div class="iconBtnTitle">
+                <fa icon="trash"/>
+              </div>
+              <p v-if="$screen.width >= 768">Supprimer le post</p>
+            </button>
           </div>
         </div>
         <div v-if="post.imageUrl" class="post-img">
           <img :src="post.imageUrl" alt="image du post">
         </div>
         <div class="postContent">
-          <p>{{post.content}}</p>
-          <div class="button">
-            <button type="button" v-if="currentUser.id == post.user_id" @click="editPost(post.id)">
-              <div class="iconBtn">
-                <fa icon="feather"/>
-              </div>
-              <p v-if="$screen.width >= 1024">Editer le post</p>
-            </button>
-            <button type="button" @click="newComment = 1, disableTextArea = 1, currentPost = post.id">
-              <div class="iconBtn">
-                <fa icon="comment"/>
-              </div>
-              <p v-if="$screen.width >= 1024">Nouveau commentaire</p>
-            </button>
-            <button type="button" v-if="currentUser.id == post.user_id || currentUser.role == true" @click="deletePost(post.id)">
-              <div class="iconBtn">
-                <fa icon="trash"/>
-              </div>
-              <p v-if="$screen.width >= 1024">Supprimer le post</p>
-            </button>
-          </div>
-          <div  class="commentContent">
-            <div v-if="newComment == 1 && post.id == currentPost && disableTextArea == 1" class="textArea" @keyup.enter="createComment(post.id)" @keyup.escape="disableTextArea = 0">
+          <p class="postContent__p">{{post.content}}</p>
+            <div class="buttonComment">
+              <button class="postContent__button" type="button" @click="newComment = 1, disableTextArea = 1, currentPost = post.id">
+                <div class="iconBtnLarge">
+                  <fa icon="comment"/>
+                </div>
+                <p>Nouveau commentaire</p>
+              </button>
+            </div>
+          <div v-if="newComment == 1 && post.id == currentPost && disableTextArea == 1" class="textArea" @keyup.enter="createComment(post.id)" @keyup.escape="disableTextArea = 0">
               <textarea v-model="content" name="newComment"></textarea>
             </div>
+          <div  class="commentContent" v-if="post.Comments.length > 0"> 
             <div v-for="comment in post.Comments.slice(0, commentsLimit)" :key="comment.id" class="comments">
               <div class="commentTitle">
-                <p>Auteur : {{comment.username}}</p>
-                <p>Crée le : {{comment.createdAt.split("T")[0].split("-").reverse().join("/") + ", à " + comment.createdAt.split("T")[1].split(":").slice(0,-1).join(":")}}</p>
-                <button type="button" @click="deleteComment(comment.id)">
+                  <p class="commentTitle__p">Auteur: {{comment.username}}, Crée le: {{comment.createdAt.split("T")[0].split("-").reverse().join("/") + ", à " + comment.createdAt.split("T")[1].split(":").slice(0,-1).join(":")}}</p>
+                <button type="button" v-if="currentUser.id == comment.user_id" @click="deleteComment(comment.id)">
                   <div class="iconBtn">
                     <fa icon="trash"/>
                   </div>
                 </button>
               </div>
-              <p> {{comment.content}}</p>
+              <p class="comments__p"> {{comment.content}}</p>
             </div>
-            <button type="button" v-if="post.Comments.length > commentsLimit" @click="showMoreComments(post.Comments.length)">
-                <p>Afficher plus de commentaires</p>  
-            </button>
-            <button type="button" v-if="post.Comments.length > 3 && showComments == 1" @click="showLessComments()">
-              <p>Réduire les commentaires</p>
-            </button> 
+            <div class="buttonComment">
+              <button type="button" class="commentContent__button" v-if="post.Comments.length > commentsLimit" @click="showMoreComments(post.Comments.length)">
+                <div class="iconBtnLarge">
+                  <fa icon="chevron-down"/>
+                </div>
+                  <p>Afficher plus de commentaires</p>  
+              </button>
+              <button type="button" class="commentContent__button" v-if="post.Comments.length > 3 && showComments == 1" @click="showLessComments()">
+                <div class="iconBtnLarge">
+                  <fa icon="chevron-up"/>
+                </div>
+                <p>Réduire les commentaires</p>
+              </button> 
+            </div>
           </div>
         </div>
       </div>
@@ -185,6 +194,7 @@ export default {
   align-items: center;
   margin-bottom: 3.5rem;
   h1 {
+    margin-top: 0.2rem;
     font-size: 1.3rem;
   }
   .userIcon {
@@ -215,109 +225,112 @@ export default {
       gap: 0.3rem;
       h2 {
         font-size: 1.2rem;
-        word-break: break-all;
+        word-break: break-word;
       }
       .postDetails {
         display: flex;
         gap: 0.5rem;
       }
+      .postTitleButton {
+        margin-top: 0.4rem;
+        justify-content: center;
+        display: flex;
+        gap: 2rem;
+        .iconBtnTitle {
+          font-size: 1rem;
+          background: white;
+          color: #1976d2;
+          padding: 0.3rem 0.7rem;
+          border-radius: 1rem;
+        }
+      }
+      &__button{
+      background: white;
+      color: black;
+      padding-right: 0.7rem;
+      font-size: 1rem;
+      transition: all 200ms ease-in;
+      transform: scale(1);   
+        &:hover {
+        cursor: pointer;
+        transition: all 200ms ease-in;
+        transform: scale(1.1);
+        }
+      }
     }
+
     .postContent {
       border-radius: 0 0 1rem 1rem;
       padding: 1.5rem 1rem 1rem 1rem;
-      p {
-        font-size: 1.1rem;
+      &__p {
+        font-size: 1rem;
         word-break: break-all;
+        margin-bottom: 1rem;
       }
-      .button {
+      .buttonComment {
         display: flex;
-        gap: 1rem;
-        margin-top: 1rem;
-        button {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          background: #1976d2;
-          color: white;
-          border-radius: 8px;
-          border: none;
-          padding: 0.3rem 0.7rem;
-          transition: 0.4s background-color;
-          margin-bottom: 1rem;
-          p {
-            word-break: unset;
-          }
-          .iconBtn {
-            display: flex;
-            text-align: center;
-            font-size: 0.9rem;
-          }
-          &:hover{
-            cursor: pointer;
-            background: #3da9fc;
-          }
+        flex-direction: row;
+        justify-content: center;
+      }
+      &__button {
+        width: 80%;
+        padding: 0.3rem 0.7rem;
+        margin-bottom: 1rem;
+        font-size: 1rem;
+        p {
+          word-break: unset;
+          margin: 0;
+        }
+        &:hover{
+          cursor: pointer;
+          background: #3da9fc;
         }
       }
-      .commentContent {
-        background: #f5f5f5;
-        border-radius: 1rem;
-        padding: 1rem;
-        textarea {
+      .textArea{
+        textarea{
           margin: 1rem 0;
           resize: none;
           width: 100%;
         }
+      }
+      .commentContent {
+        background: #dfdfdf98;
+        border-radius: 1rem;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        gap: 1rem;
         .comments {
-          p {
-          border-bottom: 1px solid #9D9D9D;
-          padding-bottom: 0.2rem;
-          }   
+          box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+          background-color: white;
+          border-radius: 1rem; 
+          padding: 0.6rem 1rem;
+          &__p {
+            word-break: break-all;
+          }
           .commentTitle {
             display: flex;
-            flex-grow: 1;
             align-items: center;
-            p {
+            justify-content: space-between;
+            &__p {
               display: flex;
-              flex-grow: 1;
-              margin: 0 0.5rem 0.2rem 0;
+              flex-direction: row;
+              margin: 0 0.8rem 0rem 0;
               font-size: 1rem;
-              border: none;
+              color: rgb(85, 85, 85)
             }
-          }
-          button {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #1976d2;
-            color: white;
-            border-radius: 8px;
-            border: none;
-
-            transition: 0.4s background-color;
-            &:hover{
-            cursor: pointer;
-            background: #3da9fc;
+            button {
+              margin: 0;
+              padding: 0.3rem 0.7rem;
             }
           }
         }
-        button {
-          margin: 0.5rem 0;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          background: #1976d2;
-          color: white;
-          border-radius: 8px;
-          border: none;
+        &__button {
+          font-size: 1rem;
+          width: 85%;
           padding: 0.3rem 0.7rem;
-          transition: 0.4s background-color;
-          p {
-            font-size: 1rem;
-          }
-          &:hover{
-          cursor: pointer;
-          background: #3da9fc;
-          }
+          margin: 0;
         }
       }
     }
@@ -333,10 +346,30 @@ export default {
   }
 }
 
+@media screen and (max-width: 1024px){
+  .currentUser {
+    margin: 2rem 0;
+  }
 
-
-
-
-
+  .postContainer {
+    .posts {
+      .postTitle {
+        &__button {
+          padding: 0;
+        }
+      }
+      .postContent {
+        &__button {
+          width: 90%;
+        }
+        .commentContent {
+          &__button {
+              width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
 
 </style>

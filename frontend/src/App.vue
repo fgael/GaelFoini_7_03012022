@@ -43,8 +43,6 @@ main{
   max-width: 60rem;
 }
 
-
-
 #app {
   width: 100%;
   background: #091f43;
@@ -106,6 +104,27 @@ main{
   background: white;
 }
 
+button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #1976d2;
+  color: white;
+  border-radius: 0.5rem;
+  border: none;
+  transition: 0.4s background-color;
+  &:hover{
+    cursor: pointer;
+    transition: 0.4s background-color;
+    background: #3da9fc;
+  }
+}
+
+.iconBtnLarge {
+  font-size: 1.1rem;
+  margin-right: 0.5rem;
+}
+
 @media screen and (max-width: 1024px){
 main {
   width: 100%;
@@ -114,10 +133,33 @@ main {
 .navcontainer {
   align-items: center;
   border-radius: 0;
+  }
+
+.container {
+  padding: 1rem;
+  border-radius: 0;
+  }
 }
+
+@media screen and (max-width: 500px){
+  main {
+    flex-direction: column;
+  }
+  .navcontainer {
+    max-width: 100%;
+    height: 4rem;
+    flex-direction: row;
+    position: sticky;
+    top: 0px;
+    right: 0px;
+    justify-content: center;
+    .logout {
+      margin-top: 0;
+    }
+  }
+  .container {
+   padding: 0.5rem;
+  }
 }
-
-
-
 
 </style>

@@ -13,7 +13,9 @@
         <label for="postImg">Image</label>
         <input class="form-input" id="postImg" type="file" @change="imgUpload" />
       </div>
-      <button type="button" @click="createPost()">
+      <button :disabled="!this.post.title && !this.post.content && !this.postImg" 
+              :class="{'button--disabled' : !this.post.title && !this.post.content && !this.postImg}"
+              type="button" @click="createPost()">
         <p>Valider</p>
       </button>
     </form>
@@ -45,7 +47,10 @@ export default {
       let id = this.$route.query.id
       if (edit == 1){
           if (!this.post.title){
-            this.post.title = `Post de : ${this.$store.state.userInfos.pseudo}`
+            this.post.title = ""
+          }
+          if (!this.post.content){
+            this.post.content = ""
           }
           let formData = new FormData()
           formData.append("user_id", this.$store.state.userInfos.id)
@@ -66,6 +71,12 @@ export default {
         })
       } else {
         //Create
+         if (!this.post.title){
+            this.post.title = ""
+          }
+          if (!this.post.content){
+            this.post.content = ""
+          }
         let formData = new FormData()
           formData.append("user_id", this.$store.state.userInfos.id)
           formData.append("title", this.post.title)
@@ -163,6 +174,14 @@ export default {
       .iconBtn {
         margin-right: 0.5rem;
         font-size: 0.9rem;
+      }
+    }
+    .button--disabled {
+      background: #cecece;
+      color: #ececec;
+      &:hover {
+        cursor: not-allowed;
+        background: #cecece;
       }
     }
   }

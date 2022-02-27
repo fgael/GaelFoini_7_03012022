@@ -1,7 +1,7 @@
 <template>
   <div class="navcontainer">
       <router-link to="/">
-        <img v-if="$screen.width >= 1200" src="../assets/icon-left-font-monochrome-white.svg" alt="logo">
+        <img v-if="$screen.width >= 1024" src="../assets/icon-left-font-monochrome-white.svg" alt="logo">
         <img v-else src="../assets/icon-monochrome-white.png" alt="logo">
       </router-link>
       <li>
@@ -9,7 +9,7 @@
           <router-link to="/admin" class="navLink">
              <div class="iconNavBar">
               <fa class="icon" icon="hammer"/>
-              <p v-if="$screen.width >= 1200">Page admin</p>
+              <p v-if="$screen.width >= 1024">Page admin</p>
             </div>
           </router-link>
         </div>
@@ -18,7 +18,7 @@
         <router-link to="/" class="navLink">
           <div class="iconNavBar">
             <fa class="icon" icon="home"/>
-            <p v-if="$screen.width >= 1200">Accueil</p>
+            <p v-if="$screen.width >= 1024">Accueil</p>
           </div>
         </router-link>
       </li>
@@ -26,7 +26,7 @@
         <router-link to="/post" class="navLink">
           <div class="iconNavBar">
             <fa class="icon" icon="feather"/>
-            <p v-if="$screen.width >= 1200">Nouveau post</p>
+            <p v-if="$screen.width >= 1024">Nouveau post</p>
           </div>
         </router-link>
       </li>
@@ -34,14 +34,14 @@
         <router-link to="/profile" class="navLink">
           <div class="iconNavBar">
             <fa class="icon" icon="user"/>
-            <p v-if="$screen.width >= 1200">Profil</p>
+            <p v-if="$screen.width >= 1024">Profil</p>
           </div>
         </router-link>
       </li>
       <li @click="logout()" class="logout">
         <div class="iconNavBar">
           <fa class="icon" icon="power-off"/>
-          <p v-if="$screen.width >= 1200">Déconnexion</p>
+          <p v-if="$screen.width >= 1024">Déconnexion</p>
         </div>
       </li>
   </div>
