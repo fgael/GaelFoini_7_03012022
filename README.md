@@ -36,6 +36,8 @@ Liste de tous les languages utilisés pour la création du site :
 
 Pour pouvoir utiliser le site et accéder à toutes les fonctionnalités que propose Groupomania, vous aurez besoin d'installer certains packages :
 
+- NodeJs version : v17.4.0
+
 Dans la console de terminal de Visual Studio Code :
 
 Cloner le projet à partir de https://github.com/fgael/GaelFoini_7_03012022
@@ -49,7 +51,7 @@ mkdir images
 npm install
 ```
 
-### Créer une base de donnée avec le nom groupomania
+### Créer une base de donnée mySQL avec le nom "groupomania"
 
 ```
 CREATE DATABASE groupomania;
@@ -83,7 +85,7 @@ une page devrait s'ouvrir automatiquement sur votre navigateur préféré,
 
 ```
 Pour obtenir votre rôle administrateur/modérateur,
-il ne restera plus qu'a entrer la clef secrete : "Sesame-ouvre-toi",
+il ne restera plus qu'a entrer la clef secrete : "sezameouvretoi",
 lors de votre création de compte.
 ```
 
