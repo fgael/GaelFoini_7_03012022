@@ -100,7 +100,7 @@ exports.updatePost = async (req, res, next) => {
     }
     console.log(imageUrl)
     // Mise à jour du post
-    await Post.update({ content: req.body.content, title: req.body.title, imageUrl: imageUrl } , { where: { id: postId } });
+    await Post.update({ ...req.body, imageUrl: imageUrl } , { where: { id: postId } });
     return res.json({ message: "Post Updated" });
   } catch (err) {
     return res.status(500).json({ message: "Database Error", error: err });

@@ -54,6 +54,7 @@ main{
 .navcontainer {
   display: flex;
   flex-direction: column;
+  z-index: 1;
   gap: 2rem;
   max-width: 12rem;
   color: white;
@@ -153,6 +154,7 @@ main {
     top: 0px;
     right: 0px;
     justify-content: center;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     .logout {
       margin-top: 0;
     }

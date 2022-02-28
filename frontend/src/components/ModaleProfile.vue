@@ -6,13 +6,13 @@
       <h2>Editer votre profil</h2>
       <div class="formGroup">
         <form class="modifyForm">
-          <div class="firstName">
-            <label for="firstName">Prénom</label>
-            <input v-model="user.prenom" class="form-input" id="firstName" type="text" placeholder="Jacques" />
-          </div>
           <div class="lastName">
             <label for="lastName">Nom</label>
             <input v-model="user.nom" class="form-input" id="lastName" type="text" placeholder="Martin" />
+          </div>
+          <div class="firstName">
+            <label for="firstName">Prénom</label>
+            <input v-model="user.prenom" class="form-input" id="firstName" type="text" placeholder="Jacques" />
           </div>
           <div class="nickName">
             <label for="nickName">Pseudo</label>

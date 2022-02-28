@@ -46,20 +46,18 @@ export default {
       let edit = this.$route.query.edit
       let id = this.$route.query.id
       if (edit == 1){
-          if (!this.post.title){
-            this.post.title = ""
-          }
-          if (!this.post.content){
-            this.post.content = ""
-          }
           let formData = new FormData()
-          formData.append("user_id", this.$store.state.userInfos.id)
-          formData.append("title", this.post.title)
-          formData.append("content", this.post.content)
-          formData.append("username", this.$store.state.userInfos.pseudo)
-          if (this.control == 1) {
+          if (this.post.title) {
+            formData.append("title", this.post.title)
+          }
+          if (this.post.content) {
+            formData.append("content", this.post.content)
+          }
+          if (this.control ==1 && this.post.Img) {
             formData.append("file", this.postImg, this.postImg.name)
           }
+          formData.append("user_id", this.$store.state.userInfos.id)
+          formData.append("username", this.$store.state.userInfos.pseudo)
         postServices.updatePost(id, formData)
         .then((res) => {
           console.log(res)

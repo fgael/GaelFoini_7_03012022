@@ -35,7 +35,7 @@
           <img :src="post.imageUrl" alt="image du post">
         </div>
         <div class="postContent">
-          <p class="postContent__p">{{post.content}}</p>
+          <p v-if="post.content" class="postContent__p">{{post.content}}</p>
             <div class="buttonComment">
               <button class="postContent__button" type="button" @click="newComment = 1, disableTextArea = 1, currentPost = post.id">
                 <div class="iconBtnLarge">
@@ -44,10 +44,14 @@
                 <p>Nouveau commentaire</p>
               </button>
             </div>
-          <div v-if="newComment == 1 && post.id == currentPost && disableTextArea == 1" class="textArea" @keyup.enter="createComment(post.id)" @keyup.escape="disableTextArea = 0">
+          <div v-if="newComment == 1 && post.id == currentPost && disableTextArea == 1" class="textArea" @keyup.enter="createComment(post.id)" @keyup.escape="disableTextArea = 0, flushTextArea()">
               <textarea v-model="content" name="newComment"></textarea>
+              <div class="iconBtn">
+                <fa @click="disableTextArea = 0, flushTextArea()" icon="square-xmark"/>
+                <fa @click="createComment(post.id)" icon="square-check"/>
+              </div>
             </div>
-          <div  class="commentContent" v-if="post.Comments.length > 0"> 
+          <div class="commentContent" v-if="post.Comments.length > 0"> 
             <div v-for="comment in post.Comments.slice(0, commentsLimit)" :key="comment.id" class="comments">
               <div class="commentTitle">
                   <p class="commentTitle__p">Auteur: {{comment.username}}, Crée le: {{comment.createdAt.split("T")[0].split("-").reverse().join("/") + ", à " + comment.createdAt.split("T")[1].split(":").slice(0,-1).join(":")}}</p>
@@ -165,6 +169,9 @@ export default {
     showLessComments() {
       this.commentsLimit = 3;
       this.showComments = 0;
+    },
+    flushTextArea() {
+      this.content = "";
     }
   },
   mounted: function () {
@@ -226,6 +233,7 @@ export default {
       h2 {
         font-size: 1.2rem;
         word-break: break-word;
+        margin-bottom: 0.3rem;
       }
       .postDetails {
         display: flex;
@@ -268,7 +276,7 @@ export default {
         padding: 1rem;
         border-radius: 0.5rem;
         box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-        font-size: 1rem;
+        font-size: 1.1rem;
         word-break: break-word;
         margin-bottom: 1rem;
       }
@@ -280,7 +288,6 @@ export default {
       &__button {
         width: 100%;
         padding: 0.3rem 0.7rem;
-        margin-bottom: 1rem;
         font-size: 1rem;
         p {
           word-break: unset;
@@ -292,25 +299,41 @@ export default {
         }
       }
       .textArea{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 1rem;
+        .iconBtn {
+          display: flex;
+          text-align: center;
+          color: #1976d2;
+          font-size: 2rem;
+          gap: 0.5rem;
+          margin: 0.5rem;
+        }
         textarea{
-          margin: 1rem 0;
+          padding: 0.5rem;
           resize: none;
           width: 100%;
-        }
+          border-radius: 0.5rem;
+          &:focus-visible {
+          outline: 2px solid #1976d2;
+          border-radius: 0.5rem;
+          }}
       }
       .commentContent {
         background: #dfdfdf98;
-        border-radius: 1rem;
-        padding: 1rem;
+        border-radius: 0.5rem;
         display: flex;
         flex-direction: column;
-        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-        gap: 1rem;
+        margin-top: 1rem;
+        box-shadow: rgba(100, 100, 111, 0.4) 0px 7px 29px 0px;
         .comments {
           box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
           background-color: white;
-          border-radius: 1rem; 
-          padding: 0.6rem 1rem;
+          border-radius: 0.5rem;
+          margin: 0.5rem 0.7rem;
+          padding: 0.5rem;
           &__p {
             word-break: break-word;
           }
@@ -334,8 +357,8 @@ export default {
         &__button {
           font-size: 1rem;
           width: 100%;
-          padding: 0.3rem 0.7rem;
-          margin: 0;
+          padding: 0.3rem 0;
+          margin: 0.5rem 0.7rem;
         }
       }
     }
@@ -363,13 +386,7 @@ export default {
           padding: 0;
         }
       }
-      .postContent {
-        .commentContent {
-          &__button {
-              width: 100%;
-          }
-        }
-      }
+
     }
   }
 }
