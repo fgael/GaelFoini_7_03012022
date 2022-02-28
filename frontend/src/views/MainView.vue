@@ -21,13 +21,13 @@
               <div class="iconBtnTitle">
                 <fa icon="feather"/>
               </div>
-              <p v-if="$screen.width >= 768">Editer le post</p>
+              <p v-if="$screen.width >= 769">Editer le post</p>
             </button>
             <button type="button" class="postTitle__button" v-if="currentUser.id == post.user_id || currentUser.role == true" @click="deletePost(post.id)">
               <div class="iconBtnTitle">
                 <fa icon="trash"/>
               </div>
-              <p v-if="$screen.width >= 768">Supprimer le post</p>
+              <p v-if="$screen.width >= 769">Supprimer le post</p>
             </button>
           </div>
         </div>
@@ -236,6 +236,7 @@ export default {
         justify-content: center;
         display: flex;
         gap: 2rem;
+
         .iconBtnTitle {
           font-size: 1rem;
           background: white;
@@ -250,7 +251,8 @@ export default {
       padding-right: 0.7rem;
       font-size: 1rem;
       transition: all 200ms ease-in;
-      transform: scale(1);   
+      transform: scale(1);
+      width: 12rem;
         &:hover {
         cursor: pointer;
         transition: all 200ms ease-in;
@@ -263,8 +265,11 @@ export default {
       border-radius: 0 0 1rem 1rem;
       padding: 1.5rem 1rem 1rem 1rem;
       &__p {
+        padding: 1rem;
+        border-radius: 0.5rem;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
         font-size: 1rem;
-        word-break: break-all;
+        word-break: break-word;
         margin-bottom: 1rem;
       }
       .buttonComment {
@@ -273,7 +278,7 @@ export default {
         justify-content: center;
       }
       &__button {
-        width: 80%;
+        width: 100%;
         padding: 0.3rem 0.7rem;
         margin-bottom: 1rem;
         font-size: 1rem;
@@ -307,7 +312,7 @@ export default {
           border-radius: 1rem; 
           padding: 0.6rem 1rem;
           &__p {
-            word-break: break-all;
+            word-break: break-word;
           }
           .commentTitle {
             display: flex;
@@ -328,7 +333,7 @@ export default {
         }
         &__button {
           font-size: 1rem;
-          width: 85%;
+          width: 100%;
           padding: 0.3rem 0.7rem;
           margin: 0;
         }
@@ -337,7 +342,7 @@ export default {
     .post-img{
       display: flex;
       img {
-      max-height: 16rem;
+      max-height: 18rem;
       width: 100%;
       object-fit: cover;
       object-position: center;
@@ -359,13 +364,22 @@ export default {
         }
       }
       .postContent {
-        &__button {
-          width: 90%;
-        }
         .commentContent {
           &__button {
               width: 100%;
           }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px){
+  .postContainer {
+    .posts {
+      .postTitle {
+        &__button {
+          width: 100%;
         }
       }
     }
