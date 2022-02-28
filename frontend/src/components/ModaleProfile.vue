@@ -62,6 +62,7 @@ export default {
 
 
 <style lang="scss" scoped>
+
 .bloc-modale {
   position: fixed;
   top: 0;
@@ -131,15 +132,5 @@ export default {
     }
   }
 }
-
-
-
-
-
-
-h2 {
-  margin: 1rem 0 1rem 0;
-}
-
 
 </style>

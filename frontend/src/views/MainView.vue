@@ -37,7 +37,7 @@
         <div class="postContent">
           <p v-if="post.content" class="postContent__p">{{post.content}}</p>
             <div class="buttonComment">
-              <button class="postContent__button" type="button" @click="newComment = 1, disableTextArea = 1, currentPost = post.id">
+              <button class="postContent__button" type="button" @click="newComment = 1, disableTextArea = 1, currentPost = post.id, flushTextArea()">
                 <div class="iconBtnLarge">
                   <fa icon="comment"/>
                 </div>
@@ -145,7 +145,7 @@ export default {
       .then((res) => {
         console.log(res)
         this.newComment = 0;
-        this.content = '';
+        this.flushTextArea();
         this.getAllPosts()
       })
       .catch ((error) => {
@@ -171,7 +171,7 @@ export default {
       this.showComments = 0;
     },
     flushTextArea() {
-      this.content = "";
+      this.content = '';
     }
   },
   mounted: function () {
@@ -319,7 +319,8 @@ export default {
           &:focus-visible {
           outline: 2px solid #1976d2;
           border-radius: 0.5rem;
-          }}
+          }
+        }
       }
       .commentContent {
         background: #dfdfdf98;

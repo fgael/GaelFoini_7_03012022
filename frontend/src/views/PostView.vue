@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     createPost() {
-      //Edit
+      // Edit post
       let edit = this.$route.query.edit
       let id = this.$route.query.id
       if (edit == 1){
@@ -68,7 +68,7 @@ export default {
           console.log(error)
         })
       } else {
-        //Create
+        // Create post
          if (!this.post.title){
             this.post.title = ""
           }
@@ -112,6 +112,7 @@ export default {
 <style lang="scss" scoped>
 
 .container {
+  padding: 1.5rem;
   .postForm {
     .postTitle {
       display: flex;
@@ -184,6 +185,17 @@ export default {
     }
   }
 } 
+
+@media screen and (max-width: 768px){
+  .container {
+    padding: 1rem;
+  }
+  .postForm {
+    .postContent {
+      height: 15rem;
+    }
+  }
+}
 
 
 </style>

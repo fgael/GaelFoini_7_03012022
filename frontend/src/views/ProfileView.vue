@@ -132,8 +132,12 @@ export default {
       font-size: 0.9rem;
     }
   }
+}
 
-
+@media screen and (max-width: 768px){
+  .container {
+    padding: 1rem;
+  }
 }
 
 

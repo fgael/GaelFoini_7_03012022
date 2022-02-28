@@ -6,7 +6,7 @@ const fs = require("fs");
 
 /* Controleur récupération des posts */
 exports.getAllPosts = (req, res, next) => {
-  Post.findAll({ include: Comment })
+  Post.findAll({ include: Comment, sort: [['createdAt', 'DESC']] })
     .then((posts) => res.json({ data: posts }))
     .catch((err) =>
       res.status(500).json({ message: "Database Error", error: err })
