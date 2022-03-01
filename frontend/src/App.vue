@@ -51,7 +51,7 @@ main{
   justify-content: center;
 }
 
-.navcontainer {
+.navContainer {
   display: flex;
   flex-direction: column;
   z-index: 1;
@@ -138,18 +138,24 @@ textarea {
 }
 
 @media screen and (max-width: 1024px){
-main {
-  width: 100%;
+  main {
+    width: 100%;
   }
 
-.navcontainer {
-  align-items: center;
-  border-radius: 0;
+  .navContainer {
+    align-items: center;
+    border-radius: 0;
+    .logo {
+      content: url("./assets/icon-monochrome-white.png");
+    }
+    &__p {
+      display: none;
+    }
   }
 
-.container {
-  padding: 1rem;
-  border-radius: 0;
+  .container {
+    padding: 1rem;
+    border-radius: 0;
   }
 }
 
@@ -157,7 +163,7 @@ main {
   main {
     flex-direction: column;
   }
-  .navcontainer {
+  .navContainer {
     max-width: 100%;
     height: 4rem;
     flex-direction: row;
