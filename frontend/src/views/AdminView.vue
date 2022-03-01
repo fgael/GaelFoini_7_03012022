@@ -114,11 +114,14 @@ export default {
 <style lang="scss" scoped>
 
 .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   .usersListTitle {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0.3rem 0 2rem 0 ;
+    margin: 1rem 0 2rem 0 ;
     h1 {
       font-size: 1.2rem;
     }
@@ -137,18 +140,17 @@ export default {
     border-radius: 1rem;
     margin: 1rem 0;
     background: #f1f1f1;
-    padding: 1rem;
+    padding: 0.7rem;
   }
 
   .button {
     display: flex;
-    margin-top: 1rem;
-    gap: 1rem;
+    gap: 0.8rem;
     button {
       font-size: 1rem;
       padding: 0.3rem 0.7rem;
       p {
-       font-size: 1rem;
+        font-size: 1rem;
         margin: 0;
       }
       .iconBtn {

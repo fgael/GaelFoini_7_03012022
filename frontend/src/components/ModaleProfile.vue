@@ -19,7 +19,7 @@
             <input v-model="user.pseudo" class="form-input" id="nickName" type="text" placeholder="martinjacques" />
           </div>
           <div class="email">
-            <label for="email">E-Mail</label>
+            <label for="email">E-mail</label>
             <input v-model="user.email" class="form-input" id="email" type="text" placeholder="martinjacques@gmail.com" />
           </div>
           <!-- <div class="password">
@@ -81,7 +81,7 @@ export default {
     right: 0;
   }
   .modale {
-    background: #f1f1f1;
+    background: white;
     color: #333;
     padding: 1.5rem;
     position: fixed;
@@ -91,11 +91,11 @@ export default {
     border-radius: 1rem;
     h2 {
       text-align: center;
+      margin-bottom: 2rem;
     }
     .btn-modale {
       position: absolute;
-      top: 15px;
-      right: 15px;
+      right: 1.2rem;
       color: white;
       background: red;
       padding: 0.2rem;
@@ -109,8 +109,17 @@ export default {
       input {
         width: 15rem;
         margin: 0.5rem 0;
-        height: 1.5rem;        
-      }
+        height: 1.5rem;
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        border: 1px solid black;
+        background: #f1f1f1;
+        &:focus-visible {
+          outline: 2px solid #1976d2;
+          border-radius: 0.5rem;
+          border: none;
+        }
+      }     
       button {
         margin: 1rem 0 0 0;
         display: flex;
@@ -118,7 +127,7 @@ export default {
         align-items: center;
         background: #1976d2 ;
         color: white;
-        border-radius: 8px;
+        border-radius: 0.5rem;
         border: none;
         font-size: 1rem;
         padding: 0.3rem 0.7rem;

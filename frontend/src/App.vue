@@ -126,6 +126,17 @@ button {
   margin-right: 0.5rem;
 }
 
+textarea {
+  padding: 0.5rem;
+  resize: none;
+  width: 100%;
+  border-radius: 0.5rem;
+  &:focus-visible {
+  outline: 2px solid #1976d2;
+  border-radius: 0.5rem;
+  }
+}
+
 @media screen and (max-width: 1024px){
 main {
   width: 100%;

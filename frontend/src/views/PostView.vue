@@ -124,6 +124,15 @@ export default {
       input {
         margin: 2rem 0;
         height: 2rem;
+        padding: 0.5rem;
+        width: 100%;
+        border-radius: 0.5rem;
+        border: 1px solid black;
+        &:focus-visible {
+          outline: 2px solid #1976d2;
+          border-radius: 0.5rem;
+          border: none;
+        }
       }
     }
     .postContent {

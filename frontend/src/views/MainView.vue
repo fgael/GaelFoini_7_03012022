@@ -11,23 +11,23 @@
         <div class="postTitle">
           <h2>{{post.title}}</h2>
           <div class="postDetails">
-          <p>Crée le
-          {{ post.createdAt.split("T")[0].split("-").reverse().join("/") + ", à " + post.createdAt.split("T")[1].split(":").slice(0,-1).join(":") }}
-          </p>
-          <p>Auteur - {{post.username}} </p>
+            <p class="postTitle__p">Crée le
+            {{ post.createdAt.split("T")[0].split("-").reverse().join("/") + ", à "
+            + post.createdAt.split("T")[1].split(":").slice(0,-1).join(":") }} Auteur - {{post.username}}
+            </p>
           </div>
           <div class="postTitleButton">
             <button type="button" class="postTitle__button" v-if="currentUser.id == post.user_id" @click="editPost(post.id)">
               <div class="iconBtnTitle">
                 <fa icon="feather"/>
               </div>
-              <p v-if="$screen.width >= 769">Editer le post</p>
+              <p class="postTitleButton__p">Editer le post</p>
             </button>
             <button type="button" class="postTitle__button" v-if="currentUser.id == post.user_id || currentUser.role == true" @click="deletePost(post.id)">
               <div class="iconBtnTitle">
                 <fa icon="trash"/>
               </div>
-              <p v-if="$screen.width >= 769">Supprimer le post</p>
+              <p class="postTitleButton__p">Supprimer le post</p>
             </button>
           </div>
         </div>
@@ -54,8 +54,11 @@
           <div class="commentContent" v-if="post.Comments.length > 0"> 
             <div v-for="comment in post.Comments.slice(0, commentsLimit)" :key="comment.id" class="comments">
               <div class="commentTitle">
-                  <p class="commentTitle__p">Auteur: {{comment.username}}, Crée le: {{comment.createdAt.split("T")[0].split("-").reverse().join("/") + ", à " + comment.createdAt.split("T")[1].split(":").slice(0,-1).join(":")}}</p>
-                <button type="button" v-if="currentUser.id == comment.user_id" @click="deleteComment(comment.id)">
+                  <p class="commentTitle__p">Auteur: {{comment.username}},
+                  Crée le: {{comment.createdAt.split("T")[0].split("-").reverse().join("/") 
+                  + ", à " + comment.createdAt.split("T")[1].split(":").slice(0,-1).join(":")}}
+                  </p>
+                <button type="button" v-if="currentUser.id == comment.user_id || currentUser.role == true" @click="deleteComment(comment.id)">
                   <div class="iconBtn">
                     <fa icon="trash"/>
                   </div>
@@ -107,8 +110,8 @@ export default {
     }
   },
   computed: {
-  currentUser() {
-    return this.$store.state.userInfos;
+    currentUser() {
+      return this.$store.state.userInfos;
     }
   },
   methods: {
@@ -230,6 +233,9 @@ export default {
       background: #1976d2;
       color: white;
       gap: 0.3rem;
+      &__p {
+        color: rgb(230, 230, 230);
+      }
       h2 {
         font-size: 1.2rem;
         word-break: break-word;
@@ -243,8 +249,7 @@ export default {
         margin-top: 0.4rem;
         justify-content: center;
         display: flex;
-        gap: 2rem;
-
+        gap: 1.5rem;
         .iconBtnTitle {
           font-size: 1rem;
           background: white;
@@ -311,16 +316,6 @@ export default {
           gap: 0.5rem;
           margin: 0.5rem;
         }
-        textarea{
-          padding: 0.5rem;
-          resize: none;
-          width: 100%;
-          border-radius: 0.5rem;
-          &:focus-visible {
-          outline: 2px solid #1976d2;
-          border-radius: 0.5rem;
-          }
-        }
       }
       .commentContent {
         background: #dfdfdf98;
@@ -379,25 +374,17 @@ export default {
   .currentUser {
     margin: 2rem 0;
   }
-
-  .postContainer {
-    .posts {
-      .postTitle {
-        &__button {
-          padding: 0;
-        }
-      }
-
-    }
-  }
 }
 
 @media screen and (max-width: 768px){
   .postContainer {
     .posts {
       .postTitle {
-        &__button {
+        .postTitleButton {
           width: 100%;
+          &__p {
+            display: none;
+          }
         }
       }
     }

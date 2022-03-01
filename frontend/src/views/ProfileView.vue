@@ -7,16 +7,16 @@
     </div>
     <div class="containerUser">
       <div class="nom">
-        <p>Nom : {{currentUser.nom}}</p>
+        <p class="containerUser__p">Nom : {{currentUser.nom}}</p>
       </div>
       <div class="prenom">
-        <p>Prénom : {{currentUser.prenom}}</p>
+        <p class="containerUser__p">Prénom : {{currentUser.prenom}}</p>
       </div>
       <div class="pseudo">
-        <p>Pseudo : {{currentUser.pseudo}}</p> 
+        <p class="containerUser__p">Pseudo : {{currentUser.pseudo}}</p> 
       </div>
       <div class="email">
-        <p>Email : {{currentUser.email}}</p>    
+        <p class="containerUser__p">Email : {{currentUser.email}}</p>    
       </div>
     </div>
     <modale :revele="revele" :toggleModale="toggleModale"></modale>
@@ -88,6 +88,10 @@ export default {
 <style lang="scss" scoped>
 
 .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   .containerIcon {
     display: flex;
     justify-content: center;
@@ -107,12 +111,14 @@ export default {
 
 
 .containerUser {
+  width: 20rem;
   padding: 1rem;
   background: #f1f1f1;
   border-radius: 1rem;
-  p {
+  &__p {
     font-size: 1.1rem;
     margin: 0.6rem 0;
+    word-break: break-all;
   }
 }
 
@@ -120,13 +126,11 @@ export default {
 .button {
   margin: 1rem 0;
   button {
+    width: 20rem;
     margin: 1rem 0;
     display: flex;
     font-size: 1rem;
     padding: 0.3rem 0.7rem;
-    p {
-      margin: 0;
-    }
     .iconBtn {
       margin-right: 0.5rem;
       font-size: 0.9rem;
