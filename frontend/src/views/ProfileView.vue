@@ -1,10 +1,6 @@
 <template>
   <div class="container" v-if="currentUser">
-    <div class="containerIcon">
-      <div class="icon">
-        <fa icon="user" />
-      </div>
-    </div>
+    <p class="nicknameLetter" v-if="getLetter()">{{nicknameLetter}}</p>
     <div class="containerUser">
       <div class="nom">
         <p class="containerUser__p">Nom : {{currentUser.nom}}</p>
@@ -47,6 +43,7 @@ export default {
   data() {
     return {
       revele: false,
+      nicknameLetter: "",
     }
   },
   computed: {
@@ -75,6 +72,10 @@ export default {
       this.$store.commit('logout');
       this.$router.push('/login');
     },
+    getLetter() {
+      this.nicknameLetter = this.currentUser.pseudo.slice(0,1)
+      return true;
+    }
   },
   mounted: function () {
   if (!this.$store.state.loggedIn){
@@ -91,28 +92,15 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  .containerIcon {
-    display: flex;
-    justify-content: center;
-    margin-top: 0.3rem;
-  }
-  .icon {
-    font-size: 1.5rem;
-    padding: 1rem;
-    margin-bottom: 2rem;
-    color: #515ad1;
-    border-radius: 50%;
-    background: #f1f1f1;
-    width: 4rem;
-    text-align: center;
+  .nicknameLetter {
+    margin-top: 1rem;
   }
 }
-
 
 .containerUser {
   width: 20rem;
   padding: 1rem;
+  margin-top: 2rem;
   background: #f1f1f1;
   border-radius: 1rem;
   &__p {

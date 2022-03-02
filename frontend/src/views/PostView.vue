@@ -16,6 +16,9 @@
       <button :disabled="!this.post.title && !this.post.content && !this.postImg" 
               :class="{'button--disabled' : !this.post.title && !this.post.content && !this.postImg}"
               type="button" @click="createPost()">
+        <div class="iconBtn">
+          <fa icon="square-check"/>
+        </div>
         <p>Valider</p>
       </button>
     </form>
@@ -171,17 +174,16 @@ export default {
       font-size: 1rem;
       padding: 0.3rem 0.7rem;
       transition: 0.4s background-color;
-      font-size: 1.1rem;
       &:hover{
         cursor: pointer;
         background: #3da9fc;
       }
       p {
         margin: 0;
+        font-size: 0.9rem;
       }
       .iconBtn {
         margin-right: 0.5rem;
-        font-size: 0.9rem;
       }
     }
     .button--disabled {

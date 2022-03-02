@@ -26,7 +26,12 @@
             <label for="password">Mot de passe</label>
             <input v-model="user.password" class="form-input" id="password" type="text" placeholder="password" />
           </div> -->
-          <button @click="modifyAccount()">Valider</button>
+          <button @click="modifyAccount()">
+            <div class="iconBtn">
+              <fa icon="square-check"/>
+            </div>
+            <p>Valider</p>
+          </button>
         </form>
       </div>
     </div>
@@ -65,10 +70,6 @@ export default {
 
 .bloc-modale {
   position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -85,7 +86,7 @@ export default {
     color: #333;
     padding: 1.5rem;
     position: fixed;
-    top: 30%;
+    top: 20%;
     width: 18rem;
     max-width: 60vh;
     border-radius: 1rem;
@@ -129,13 +130,19 @@ export default {
         color: white;
         border-radius: 0.5rem;
         border: none;
-        font-size: 1rem;
         padding: 0.3rem 0.7rem;
         transition: 0.4s background-color;
-        font-size: 1.1rem;
+        font-size: 1rem;
+        width: 100%;
+        p {
+          font-size: 0.9rem;
+        }
         &:hover{
           cursor: pointer;
           background: #3da9fc;
+        }
+        .iconBtn {
+          margin-right: 0.5rem;
         }
       }
     }

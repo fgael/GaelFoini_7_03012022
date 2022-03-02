@@ -11,9 +11,9 @@
         <div class="postTitle">
           <h2>{{post.title}}</h2>
           <div class="postDetails">
-            <p class="postTitle__p">Crée le
+            <p class="postTitle__p">Auteur: {{post.username}}, le
             {{ post.createdAt.split("T")[0].split("-").reverse().join("/") + ", à "
-            + post.createdAt.split("T")[1].split(":").slice(0,-1).join(":") }} Auteur - {{post.username}}
+            + post.createdAt.split("T")[1].split(":").slice(0,-1).join(":") }}
             </p>
           </div>
           <div class="postTitleButton">
@@ -54,11 +54,14 @@
           <div class="commentContent" v-if="post.Comments.length > 0"> 
             <div v-for="comment in post.Comments.slice(0, commentsLimit)" :key="comment.id" class="comments">
               <div class="commentTitle">
-                  <p class="commentTitle__p">Auteur: {{comment.username}},
-                  Crée le: {{comment.createdAt.split("T")[0].split("-").reverse().join("/") 
-                  + ", à " + comment.createdAt.split("T")[1].split(":").slice(0,-1).join(":")}}
-                  </p>
-                <button type="button" v-if="currentUser.id == comment.user_id || currentUser.role == true" @click="deleteComment(comment.id)">
+                  <div class="iconDate">
+                    <p class="nicknameLetter" v-if="getLetter(comment.username)">{{nicknameLetter}}</p>
+                    <p class="commentTitle__p">{{comment.username}},
+                    le: {{comment.createdAt.split("T")[0].split("-").reverse().join("/") 
+                    + ", à " + comment.createdAt.split("T")[1].split(":").slice(0,-1).join(":")}}
+                    </p>
+                  </div>
+                  <button type="button" v-if="currentUser.id == comment.user_id || currentUser.role == true" @click="deleteComment(comment.id)">
                   <div class="iconBtn">
                     <fa icon="trash"/>
                   </div>
@@ -107,6 +110,7 @@ export default {
       disableTextArea: 0,
       commentsLimit: 3,
       showComments: 0,
+      nicknameLetter: '',
     }
   },
   computed: {
@@ -175,6 +179,10 @@ export default {
     },
     flushTextArea() {
       this.content = '';
+    },
+    getLetter(nickname) {
+      this.nicknameLetter = nickname.slice(0,1)
+      return true;
     }
   },
   mounted: function () {
@@ -204,7 +212,6 @@ export default {
   align-items: center;
   margin-bottom: 3.5rem;
   h1 {
-    margin-top: 0.2rem;
     font-size: 1.3rem;
   }
   .userIcon {
@@ -325,6 +332,9 @@ export default {
         margin-top: 1rem;
         box-shadow: rgba(100, 100, 111, 0.4) 0px 7px 29px 0px;
         .comments {
+          display: flex;
+          flex-direction: column;
+          gap: 0.4rem;
           box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
           background-color: white;
           border-radius: 0.5rem;
@@ -332,6 +342,7 @@ export default {
           padding: 0.5rem;
           &__p {
             word-break: break-word;
+            padding-left: 0.2rem;
           }
           .commentTitle {
             display: flex;
@@ -345,8 +356,19 @@ export default {
               color: rgb(85, 85, 85)
             }
             button {
+              float: right;
               margin: 0;
               padding: 0.3rem 0.7rem;
+            }
+            .iconDate {
+              display: flex;
+              align-items: center;
+              gap: 0.6rem;
+            }
+            .nicknameLetter {
+              font-size: 1rem;
+              padding: 0.4rem;
+              width: 2.1rem;
             }
           }
         }

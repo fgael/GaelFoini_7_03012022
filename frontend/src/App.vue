@@ -103,7 +103,17 @@ main{
   border-radius: 0 1rem 1rem 0;
   padding: 1.8rem;
   background: white;
-}
+  .nicknameLetter {
+    font-size: 2rem;
+    font-weight: 900;
+    padding: 0.8rem;
+    color: #515ad1;
+    border-radius: 50%;
+    background: #f1f1f1;
+    width: 4.2rem;
+    text-align: center;
+  }}
+
 
 button {
   display: flex;
