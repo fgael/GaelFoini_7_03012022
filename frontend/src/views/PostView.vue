@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     createPost() {
-      // Edit post
+      // Edition post
       let edit = this.$route.query.edit
       let id = this.$route.query.id
       if (edit == 1){
@@ -71,7 +71,7 @@ export default {
           console.log(error)
         })
       } else {
-        // Create post
+        // Creation post
          if (!this.post.title){
             this.post.title = ""
           }

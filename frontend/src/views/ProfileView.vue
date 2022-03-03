@@ -65,6 +65,7 @@ export default {
         console.log(error)
       })
     },
+    // Popup modale
     toggleModale: function(){
       this.revele = !this.revele;
     },
@@ -98,7 +99,7 @@ export default {
 }
 
 .containerUser {
-  width: 20rem;
+  width: 21rem;
   padding: 1rem;
   margin-top: 2rem;
   background: #f1f1f1;
@@ -114,7 +115,7 @@ export default {
 .button {
   margin: 1rem 0;
   button {
-    width: 20rem;
+    width: 21rem;
     margin: 1rem 0;
     display: flex;
     font-size: 1rem;

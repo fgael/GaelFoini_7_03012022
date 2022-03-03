@@ -193,7 +193,7 @@ exports.updateComment = async (req, res, next) => {
       where: { id: commentId },
       raw: true,
     });
-    if (req.tokenId !== comment.user_id) {
+    if (req.tokenId !== comment.user_id || req.role === 1 ) {
       return res.status(401).json({ message: "Unauthorized" });
     }
     // Vérifier si le commentaire existe

@@ -1,4 +1,5 @@
 <template>
+
   <main>
     <NavBar v-if="currentUser"/>
     <router-view/>
@@ -20,6 +21,7 @@ export default {
     }
   },
 }
+
 </script>
 
 

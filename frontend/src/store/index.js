@@ -1,6 +1,7 @@
 import { createStore } from "vuex";
 import { instance } from "@/helpers/interceptor";
 
+// verification si utilisateur est connecte avec tokens
 let loggedIn = false;
 let user = localStorage.getItem("userTokens");
 let userInfos = localStorage.getItem("userInfos");

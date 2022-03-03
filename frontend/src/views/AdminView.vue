@@ -80,6 +80,7 @@ export default {
         console.log(error)
       })
     },
+    // possibilité pour un admin de changer le role d'un utilisateur ou admin
     updateRole(id, role) {
       if (role == 1) {
         this.newRole = false

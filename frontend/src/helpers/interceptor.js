@@ -21,7 +21,7 @@ instance.interceptors.response.use(
   (response) => {
     return response;
   },
-  // Expiration accessToken (erreur 401) renouvellement avec refreshToken
+  // Si expiration accessToken (erreur 401) redirection vers refreshToken
   async function (error) {
     const originalRequest = error.config;
     if (error.response.status === 401 && !originalRequest._retry) {
@@ -33,6 +33,7 @@ instance.interceptors.response.use(
   }
 );
 
+// Mise en place nouveau accessToken grace au refreshToken
 async function refreshToken() {
   return new Promise((resolve, reject) => {
     try {
@@ -52,4 +53,6 @@ async function refreshToken() {
     }
   })
 }
+
+// Exportation instance pour recuperer axios dans ./services
 export { instance };

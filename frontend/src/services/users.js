@@ -24,4 +24,5 @@ class userServices {
   // }
 }
 
+// exportation userServices pour route user
 export default new userServices();

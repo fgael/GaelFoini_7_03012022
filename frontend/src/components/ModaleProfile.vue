@@ -43,6 +43,7 @@
 
 export default {
   name: "ModaleProfile",
+  // props pour activation modale
   props: ['revele', 'toggleModale'],
   data() {
     return {

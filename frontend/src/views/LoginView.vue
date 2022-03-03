@@ -28,7 +28,7 @@
         <input v-model="password" class="formGroup_input" type="password" placeholder="Mot de passe" />
       </div>
       <div class="formGroup" v-if="type == 'create'">
-        <input v-model="secretKey" class="formGroup_input" type="text" placeholder="Formule magique" />
+        <input v-model="secretKey" class="formGroup_input" type="text" placeholder="(Optionnel - Formule magique)" />
       </div>
       <div class="formGroup" v-if="type == 'login' && status == 'error_login'">
         Adresse e-mail et/ou mot de passe invalide
@@ -68,6 +68,7 @@ export default {
     }
   },
   computed: {
+    // desactivation du bouton connection ou creer un compte si champs manquant
     validatedFields() {
       if (this.type == 'create') {
         if (this.prenom !="" && this.nom !="" && this.email !="" && this.pseudo !="" && this.password != "") {
@@ -86,6 +87,7 @@ export default {
     ...mapState(['status'])
  },
   methods: {
+    // changement d'affichage connection, création de compte
     switchCreateAccount() {
       this.type = "create";
     },

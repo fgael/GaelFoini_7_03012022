@@ -7,6 +7,7 @@
       </div>
     </div>
     <div class="postContainer">
+      <!-- affichage des post du plus recent au plus ancien -->
       <div v-for="post in posts.slice().reverse()" :key="post.id" class="posts">
         <div class="postTitle">
           <h2>{{post.title}}</h2>
@@ -51,7 +52,8 @@
                 <fa @click="createComment(post.id)" icon="square-check"/>
               </div>
             </div>
-          <div class="commentContent" v-if="post.Comments.length > 0"> 
+          <!-- affichage des commentaires -->
+          <div class="commentContent" v-if="post.Comments.length > 0">
             <div v-for="comment in post.Comments.slice(0, commentsLimit)" :key="comment.id" class="comments">
               <div class="commentTitle">
                   <div class="iconDate">
@@ -87,10 +89,6 @@
         </div>
       </div>
     </div>
-    <!-- Display screen size indicator -->
-    <!-- <p>Page width is {{ $screen.width }} px</p>
-    <p>Page height is {{ $screen.height }} px</p>
-    <p>Current breakpoint is {{ $screen.breakpoint }} px</p> -->
   </div>
 </template>
 
