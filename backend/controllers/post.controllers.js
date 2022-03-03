@@ -6,7 +6,7 @@ const fs = require("fs");
 
 /* Controleur récupération des posts */
 exports.getAllPosts = (req, res, next) => {
-  Post.findAll({ include: Comment })
+  Post.findAll({ include: Comment, sort: [['createdAt', 'DESC']] })
     .then((posts) => res.json({ data: posts }))
     .catch((err) =>
       res.status(500).json({ message: "Database Error", error: err })
@@ -100,7 +100,7 @@ exports.updatePost = async (req, res, next) => {
     }
     console.log(imageUrl)
     // Mise à jour du post
-    await Post.update({ content: req.body.content, title: req.body.title, imageUrl: imageUrl } , { where: { id: postId } });
+    await Post.update({ ...req.body, imageUrl: imageUrl } , { where: { id: postId } });
     return res.json({ message: "Post Updated" });
   } catch (err) {
     return res.status(500).json({ message: "Database Error", error: err });
@@ -193,7 +193,7 @@ exports.updateComment = async (req, res, next) => {
       where: { id: commentId },
       raw: true,
     });
-    if (req.tokenId !== comment.user_id) {
+    if (req.tokenId !== comment.user_id || req.role === 1 ) {
       return res.status(401).json({ message: "Unauthorized" });
     }
     // Vérifier si le commentaire existe

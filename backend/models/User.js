@@ -12,17 +12,17 @@ module.exports = (sequelize, Sequelize) => {
         autoIncrement: true,
       },
       nom: {
-        type: DataTypes.STRING(100),
+        type: DataTypes.STRING(30),
         defaultValue: "",
         allowNull: false,
       },
       prenom: {
-        type: DataTypes.STRING(100),
+        type: DataTypes.STRING(30),
         defaultValue: "",
         allowNull: false,
       },
       pseudo: {
-        type: DataTypes.STRING(100),
+        type: DataTypes.STRING(30),
         allowNull: false,
         unique: true,
       },

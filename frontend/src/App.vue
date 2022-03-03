@@ -1,4 +1,5 @@
 <template>
+
   <main>
     <NavBar v-if="currentUser"/>
     <router-view/>
@@ -20,6 +21,7 @@ export default {
     }
   },
 }
+
 </script>
 
 
@@ -51,9 +53,10 @@ main{
   justify-content: center;
 }
 
-.navcontainer {
+.navContainer {
   display: flex;
   flex-direction: column;
+  z-index: 1;
   gap: 2rem;
   max-width: 12rem;
   color: white;
@@ -102,7 +105,17 @@ main{
   border-radius: 0 1rem 1rem 0;
   padding: 1.8rem;
   background: white;
-}
+  .nicknameLetter {
+    font-size: 2rem;
+    font-weight: 900;
+    padding: 0.8rem;
+    color: #515ad1;
+    border-radius: 50%;
+    background: #f1f1f1;
+    width: 4.2rem;
+    text-align: center;
+  }}
+
 
 button {
   display: flex;
@@ -125,19 +138,36 @@ button {
   margin-right: 0.5rem;
 }
 
-@media screen and (max-width: 1024px){
-main {
+textarea {
+  padding: 0.5rem;
+  resize: none;
   width: 100%;
+  border-radius: 0.5rem;
+  &:focus-visible {
+  outline: 2px solid #1976d2;
+  border-radius: 0.5rem;
+  }
+}
+
+@media screen and (max-width: 1024px){
+  main {
+    width: 100%;
   }
 
-.navcontainer {
-  align-items: center;
-  border-radius: 0;
+  .navContainer {
+    align-items: center;
+    border-radius: 0;
+    .logo {
+      content: url("./assets/icon-monochrome-white.png");
+    }
+    &__p {
+      display: none;
+    }
   }
 
-.container {
-  padding: 1rem;
-  border-radius: 0;
+  .container {
+    padding: 1rem;
+    border-radius: 0;
   }
 }
 
@@ -145,7 +175,7 @@ main {
   main {
     flex-direction: column;
   }
-  .navcontainer {
+  .navContainer {
     max-width: 100%;
     height: 4rem;
     flex-direction: row;
@@ -153,6 +183,7 @@ main {
     top: 0px;
     right: 0px;
     justify-content: center;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     .logout {
       margin-top: 0;
     }

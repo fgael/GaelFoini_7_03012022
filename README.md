@@ -46,36 +46,43 @@ Cloner le projet à partir de https://github.com/fgael/GaelFoini_7_03012022
 
 ```
 à partir du dossier cloné :
-cd .\backend\
-mkdir images
-npm install
+
+"cd ./backend/"
+"mkdir images"
+"npm install"
 ```
 
-### Créer une base de donnée mySQL avec le nom "groupomania"
+### Créer une base de donnée mySQL avec le nom "groupomania ou l'importer depuis le dossier BDD"
 
 ```
-CREATE DATABASE groupomania;
-Verifier vos données de connection dans le fichier /backend/.env
+Verifier vos données de connection dans le fichier "/backend/.env",
+puis créer votre database :
+"CREATE DATABASE groupomania";
+
+Optionnel : pour avoir un compte admin déjà crée, importer la base de données dans mySQL,
+depuis le dossier BDD :
+mysql -u [utilisateur] -p groupomania < groupomania.sql
 ```
 
 ### Démarrage backend
 
 ```
-npm run dev
+"npm run dev"
 ```
 
 ## Installation frontend
 
 ```
 à partir du dossier cloné :
-cd .\frontend\
-npm install
+
+"cd ./frontend/"
+"npm install"
 ```
 
 ### Démarrage frontend
 
 ```
-npm run serve
+"npm run serve"
 ```
 
 ### Rôle admin/modérateur
@@ -87,6 +94,9 @@ une page devrait s'ouvrir automatiquement sur votre navigateur préféré,
 Pour obtenir votre rôle administrateur/modérateur,
 il ne restera plus qu'a entrer la clef secrete : "sezameouvretoi",
 lors de votre création de compte.
+
+Si la base de données à été importé depuis le dossier BDD,
+se connecter avec le compte "admin@groupomania.com" et le mot de passe "Group0mania".
 ```
 
 ## Contacts

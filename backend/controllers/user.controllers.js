@@ -1,6 +1,8 @@
 /* Import des modules necessaires */
 const db = require("../db.config");
 const User = db.user;
+const Post = db.post;
+const Comment = db.comment;
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -167,7 +169,7 @@ exports.updateAccount = async (req, res, next) => {
       return res.status(404).json({ message: "This user does not exist !" });
     }
     // Mise à jour de l'utilisateur
-    await User.update(req.body, { where: { id: userId } });
+    await User.update({ ...req.body } , { where: { id: userId } });
     let newUserData = await User.findOne({ where: { id: userId }, raw: true });
     const token = jwt.sign(
       {
@@ -195,6 +197,10 @@ exports.updateAccount = async (req, res, next) => {
     const tokens = {
       access_token: token,
       refresh_token: refreshToken,
+    }
+    if(req.body.pseudo){
+      Post.update({username: req.body.pseudo}, { where : { user_id : user.id }})
+      Comment.update({username: req.body.pseudo}, { where : { user_id : user.id }})
     }
     return res.json({ userTokens: tokens, userInfos: newUserData, message: "User updated" });
   } catch (err) {

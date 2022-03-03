@@ -1,15 +1,14 @@
 <template>
-  <div class="navcontainer">
+  <div class="navContainer">
       <router-link to="/">
-        <img v-if="$screen.width >= 1024" src="../assets/icon-left-font-monochrome-white.svg" alt="logo">
-        <img v-else src="../assets/icon-monochrome-white.png" alt="logo">
+        <img src="../assets/icon-left-font-monochrome-white.svg" alt="logo" class="logo">
       </router-link>
       <li>
-        <div class="admin" v-if="currentUser.role == 1">
+        <div v-if="currentUser.role == 1">
           <router-link to="/admin" class="navLink">
              <div class="iconNavBar">
               <fa class="icon" icon="hammer"/>
-              <p v-if="$screen.width >= 1024">Page admin</p>
+              <p class="navContainer__p">Page admin</p>
             </div>
           </router-link>
         </div>
@@ -18,7 +17,7 @@
         <router-link to="/" class="navLink">
           <div class="iconNavBar">
             <fa class="icon" icon="home"/>
-            <p v-if="$screen.width >= 1024">Accueil</p>
+            <p class="navContainer__p">Accueil</p>
           </div>
         </router-link>
       </li>
@@ -26,7 +25,7 @@
         <router-link to="/post" class="navLink">
           <div class="iconNavBar">
             <fa class="icon" icon="feather"/>
-            <p v-if="$screen.width >= 1024">Nouveau post</p>
+            <p class="navContainer__p">Nouveau post</p>
           </div>
         </router-link>
       </li>
@@ -34,14 +33,14 @@
         <router-link to="/profile" class="navLink">
           <div class="iconNavBar">
             <fa class="icon" icon="user"/>
-            <p v-if="$screen.width >= 1024">Profil</p>
+            <p class="navContainer__p">Profil</p>
           </div>
         </router-link>
       </li>
       <li @click="logout()" class="logout">
         <div class="iconNavBar">
           <fa class="icon" icon="power-off"/>
-          <p v-if="$screen.width >= 1024">Déconnexion</p>
+          <p class="navContainer__p">Déconnexion</p>
         </div>
       </li>
   </div>

@@ -4,6 +4,7 @@ import MainView from '../views/MainView.vue'
 import AdminView from '../views/AdminView.vue'
 import ProfileView from '../views/ProfileView.vue'
 import PostView from '../views/PostView.vue'
+import PageNotFound from '../views/PageNotFound.vue'
 
 const routes = [
   {
@@ -31,6 +32,14 @@ const routes = [
     name: 'profile',
     component: ProfileView
   },
+  {
+    path: "/:catchAll(.*)",
+    name: "NotFound",
+    component: PageNotFound,
+    meta: {
+      requiresAuth: false
+    }
+  },  
 ]
 
 const router = createRouter({

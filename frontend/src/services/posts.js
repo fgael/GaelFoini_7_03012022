@@ -36,4 +36,5 @@ class postServices {
   // }
 }
 
+// Exportation postServices pour route post & comment
 export default new postServices();
